@@ -1,0 +1,491 @@
+{
+    "industries": [
+        {
+            "name": "Information Technology (IT) and IT-Enabled Services (ITES)",
+            "avg_salary": 1200000,
+            "job_openings": 905715,
+            "growth_rate": 15,
+            "major_companies": ["Microsoft", "Google", "Infosys"],
+            "description": "Hyderabad's IT sector has seen significant growth, with major global giants establishing substantial operations in the city.",
+            "location": "HITEC City, Gachibowli"
+          },
+          {
+            "name": "Pharmaceuticals and Biotechnology",
+            "avg_salary": 800000,
+            "job_openings": 50000,
+            "growth_rate": 12,
+            "major_companies": ["Dr. Reddy's Laboratories", "Aurobindo Pharma", "Bharat Biotech"],
+            "description": "Known as the 'Pharma City' of India, Hyderabad hosts numerous pharmaceutical and biotech companies, contributing significantly to exports and employment.",
+            "location": "Genome Valley, Hyderabad Pharma City"
+          },
+          {
+            "name": "Manufacturing",
+            "avg_salary": 700000,
+            "job_openings": 40000,
+            "growth_rate": 10,
+            "major_companies": ["Hyundai", "Tata Boeing Aerospace", "Mahindra & Mahindra"],
+            "description": "The manufacturing sector in Hyderabad includes industries like electronics, automobiles, aerospace, and food and beverages.",
+            "location": "Patancheru, Balanagar"
+          },
+          {
+            "name": "Financial Services",
+            "avg_salary": 900000,
+            "job_openings": 30000,
+            "growth_rate": 8,
+            "major_companies": ["Axis Bank", "HSBC", "ICICI Bank"],
+            "description": "Hyderabad's financial services sector encompasses banking, investment firms, and fintech companies, offering a range of financial products and services.",
+            "location": "Madhapur, Banjara Hills"
+          },
+          {
+            "name": "Real Estate and Infrastructure",
+            "avg_salary": 850000,
+            "job_openings": 25000,
+            "growth_rate": 9,
+            "major_companies": ["Larsen & Toubro", "Tata Projects", "Phoenix Group"],
+            "description": "The city's real estate and infrastructure sector is booming, with numerous projects in commercial, residential, and industrial development.",
+            "location": "Jubilee Hills, Kondapur"
+          },
+          {
+            "name": "Education",
+            "avg_salary": 600000,
+            "job_openings": 20000,
+            "growth_rate": 7,
+            "major_companies": ["IIT Hyderabad", "BITS Pilani Hyderabad", "University of Hyderabad"],
+            "description": "Hyderabad has a strong education sector with reputed universities, research institutions, and a growing ed-tech industry.",
+            "location": "Gachibowli, Tarnaka"
+          }
+    ],
+"job_roles": [
+                {
+                    "role": "Data Analyst",
+                    "avg_salary_inr": 900000,
+                    "avg_salary_usd": 10843,
+                    "job_openings": 80000,
+                    "growth_rate": 18,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["SQL", "Python", "Data Visualization", "Tableau"],
+                    "locations": ["Hyderabad", "Bangalore", "Mumbai"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "AI Engineer",
+                    "avg_salary_inr": 1500000,
+                    "avg_salary_usd": 18072,
+                    "job_openings": 60000,
+                    "growth_rate": 25,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["Python", "TensorFlow", "Machine Learning", "Cloud Computing"],
+                    "locations": ["Hyderabad", "Pune", "Delhi"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Cloud Solutions Architect",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 45000,
+                    "growth_rate": 22,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["AWS", "Azure", "Google Cloud", "DevOps"],
+                    "locations": ["Hyderabad", "Bangalore", "Delhi"],
+                    "demand_trend": "Extremely High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Software Engineer",
+                    "avg_salary_inr": 1100000,
+                    "avg_salary_usd": 13253,
+                    "job_openings": 120000,
+                    "growth_rate": 15,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["Java", "JavaScript", "React", "AWS"],
+                    "locations": ["Hyderabad", "Chennai", "Bangalore"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Registered Nurse",
+                    "avg_salary_inr": 600000,
+                    "avg_salary_usd": 7229,
+                    "job_openings": 50000,
+                    "growth_rate": 12,
+                    "industry": "Healthcare",
+                    "skills": ["Nursing", "Patient Care", "Medical Knowledge", "Communication"],
+                    "locations": ["Hyderabad", "Kolkata", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Medical Consultant",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14458,
+                    "job_openings": 30000,
+                    "growth_rate": 15,
+                    "industry": "Healthcare",
+                    "skills": ["Medical Diagnosis", "Patient Consultation", "Healthcare Management", "Research"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Cardiologist",
+                    "avg_salary_inr": 2500000,
+                    "avg_salary_usd": 30104,
+                    "job_openings": 15000,
+                    "growth_rate": 18,
+                    "industry": "Healthcare",
+                    "skills": ["Cardiology", "Patient Care", "Medical Research", "Surgery"],
+                    "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Financial Analyst",
+                    "avg_salary_inr": 1000000,
+                    "avg_salary_usd": 12048,
+                    "job_openings": 35000,
+                    "growth_rate": 10,
+                    "industry": "Financial Services",
+                    "skills": ["Excel", "Financial Modeling", "Risk Analysis", "CFA"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Private Equity Analyst",
+                    "avg_salary_inr": 1400000,
+                    "avg_salary_usd": 16867,
+                    "job_openings": 25000,
+                    "growth_rate": 12,
+                    "industry": "Financial Services",
+                    "skills": ["Equity Research", "Financial Forecasting", "LBO Modeling", "Valuation"],
+                    "locations": ["Hyderabad", "Mumbai", "Gurgaon"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Clinical Research Associate (CRA)",
+                    "avg_salary_inr": 850000,
+                    "avg_salary_usd": 10241,
+                    "job_openings": 25000,
+                    "growth_rate": 14,
+                    "industry": "Pharmaceuticals and Biotechnology",
+                    "skills": ["Clinical Trials", "Regulatory Affairs", "Data Analysis", "GCP"],
+                    "locations": ["Hyderabad", "Bangalore", "Pune"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Senior Clinical Research Scientist",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14457,
+                    "job_openings": 18000,
+                    "growth_rate": 16,
+                    "industry": "Pharmaceuticals and Biotechnology",
+                    "skills": ["Clinical Research", "Regulatory Compliance", "Pharmacovigilance", "GCP"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Director of Drug Development",
+                    "avg_salary_inr": 2200000,
+                    "avg_salary_usd": 26525,
+                    "job_openings": 9000,
+                    "growth_rate": 12,
+                    "industry": "Pharmaceuticals and Biotechnology",
+                    "skills": ["Drug Discovery", "Regulatory Affairs", "Clinical Strategy", "Pharmacology"],
+                    "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },                                
+                {
+                    "role": "Cloud Architect",
+                    "avg_salary_inr": 1400000,
+                    "avg_salary_usd": 16867,
+                    "job_openings": 45000,
+                    "growth_rate": 20,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["AWS", "Azure", "Google Cloud", "DevOps"],
+                    "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Mechanical Engineer",
+                    "avg_salary_inr": 800000,
+                    "avg_salary_usd": 9639,
+                    "job_openings": 30000,
+                    "growth_rate": 13,
+                    "industry": "Manufacturing",
+                    "skills": ["CAD", "AutoCAD", "Thermodynamics", "Project Management"],
+                    "locations": ["Hyderabad", "Pune", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Industrial Automation Engineer",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14458,
+                    "job_openings": 25000,
+                    "growth_rate": 15,
+                    "industry": "Manufacturing",
+                    "skills": ["PLC Programming", "SCADA", "Robotics", "Lean Manufacturing"],
+                    "locations": ["Hyderabad", "Bangalore", "Mumbai"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Manufacturing Operations Director",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 15000,
+                    "growth_rate": 10,
+                    "industry": "Manufacturing",
+                    "skills": ["Operations Management", "Supply Chain", "Lean Six Sigma", "Budgeting"],
+                    "locations": ["Hyderabad", "Delhi", "Ahmedabad"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Investment Banker",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 15000,
+                    "growth_rate": 12,
+                    "industry": "Financial Services",
+                    "skills": ["Mergers & Acquisitions", "Valuation", "Risk Management", "Finance"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "University Professor",
+                    "avg_salary_inr": 700000,
+                    "avg_salary_usd": 8434,
+                    "job_openings": 15000,
+                    "growth_rate": 8,
+                    "industry": "Education",
+                    "skills": ["Teaching", "Research", "Curriculum Development", "Academic Writing"],
+                    "locations": ["Hyderabad", "Delhi", "Bangalore"],
+                    "demand_trend": "Low",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Education Technology Specialist",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14458,
+                    "job_openings": 10000,
+                    "growth_rate": 12,
+                    "industry": "Education",
+                    "skills": ["E-Learning Platforms", "Instructional Design", "Learning Management Systems (LMS)", "Data Analytics"],
+                    "locations": ["Hyderabad", "Mumbai", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Dean / Academic Director",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 5000,
+                    "growth_rate": 6,
+                    "industry": "Education",
+                    "skills": ["Leadership", "Higher Education Policy", "Financial Management", "Strategic Planning"],
+                    "locations": ["Hyderabad", "Delhi", "Pune"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                }
+            ],
+    "skills_in_demand": [
+    {
+      "skill": "Python",
+      "demand": 8500, 
+      "job_roles": [
+        {"role": "Software Engineer", "demand_percentage": 70},
+        {"role": "Data Scientist", "demand_percentage": 90},
+        {"role": "AI/ML Engineer", "demand_percentage": 85}
+      ],
+      "industry": ["Information Technology"],
+      "growth_rate": 20,
+      "top_companies": ["Microsoft", "Google", "TCS"],
+      "country": "Global",  
+      "year": 2024      
+    },
+    {
+      "skill": "SQL",
+      "demand": 7000,
+      "job_roles": [
+        {"role": "Data Scientist", "demand_percentage": 80},
+        {"role": "Financial Analyst", "demand_percentage": 65},
+        {"role": "DevOps Engineer", "demand_percentage": 50}
+      ],
+      "industry": ["Finance", "Information Technology"],
+      "growth_rate": 15,
+      "top_companies": ["HSBC", "Deloitte", "Wells Fargo"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Cybersecurity",
+      "demand": 6200,
+      "job_roles": [
+        {"role": "Cybersecurity Analyst", "demand_percentage": 95},
+        {"role": "Cloud Solutions Architect", "demand_percentage": 60}
+      ],
+      "industry": ["Information Technology"],
+      "growth_rate": 18,
+      "top_companies": ["IBM", "Wipro", "Infosys"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Cloud Computing",
+      "demand": 7800,
+      "job_roles": [
+        {"role": "Software Engineer", "demand_percentage": 55},
+        {"role": "Cloud Solutions Architect", "demand_percentage": 90},
+        {"role": "DevOps Engineer", "demand_percentage": 85}
+      ],
+      "industry": ["Information Technology", "Cloud Services"],
+      "growth_rate": 22,
+      "top_companies": ["Amazon Web Services", "Microsoft Azure", "Google Cloud"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Medical Knowledge",
+      "demand": 5400,
+      "job_roles": [
+        {"role": "Registered Nurse", "demand_percentage": 90},
+        {"role": "Pharmaceutical Researcher", "demand_percentage": 70}
+      ],
+      "industry": ["Healthcare"],
+      "growth_rate": 25,
+      "top_companies": ["Apollo Hospitals", "Yashoda Hospitals", "Bharat Biotech"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Machine Learning",
+      "demand": 6700,
+      "job_roles": [
+        {"role": "AI/ML Engineer", "demand_percentage": 95},
+        {"role": "Data Scientist", "demand_percentage": 75}
+      ],
+      "industry": ["Artificial Intelligence", "Information Technology"],
+      "growth_rate": 30,
+      "top_companies": ["Google AI", "Facebook AI", "Microsoft Research"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Financial Modeling",
+      "demand": 4800,
+      "job_roles": [
+        {"role": "Financial Analyst", "demand_percentage": 85},
+        {"role": "Investment Banker", "demand_percentage": 80}
+      ],
+      "industry": ["Finance"],
+      "growth_rate": 12,
+      "top_companies": ["JP Morgan", "ICICI Bank", "Goldman Sachs"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Automation & DevOps",
+      "demand": 5900,
+      "job_roles": [
+        {"role": "DevOps Engineer", "demand_percentage": 90},
+        {"role": "Software Engineer", "demand_percentage": 60}
+      ],
+      "industry": ["Information Technology"],
+      "growth_rate": 19,
+      "top_companies": ["Amazon", "Adobe", "Capgemini"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "UI/UX Design",
+      "demand": 6100,
+      "job_roles": [
+        {"role": "Frontend Developer", "demand_percentage": 75},
+        {"role": "Product Designer", "demand_percentage": 90}
+      ],
+      "industry": ["Technology", "Product Development"],
+      "growth_rate": 16,
+      "top_companies": ["Swiggy", "Zomato", "Adobe"],
+      "country": "Global",
+      "year": 2024
+    },
+    {
+      "skill": "Digital Marketing",
+      "demand": 5500,
+      "job_roles": [
+        {"role": "Marketing Manager", "demand_percentage": 70},
+        {"role": "SEO Specialist", "demand_percentage": 85},
+        {"role": "Social Media Manager", "demand_percentage": 80}
+      ],
+      "industry": ["E-commerce", "Startups"],
+      "growth_rate": 14,
+      "top_companies": ["Amazon India", "Myntra", "Byju’s"],
+      "country": "Global",
+      "year": 2024
+    }
+    ],
+    "job_trends": [
+    {
+      "year": 2022,
+      "total_jobs": 2000000,
+      "growth_percentage": 8,
+      "key_drivers": [
+        "IT boom",
+        "Pharmaceutical Expansion",
+        "Infrastructure Development"
+      ],
+      "notes": "Steady growth driven primarily by the IT and Pharma sectors in Hyderabad."
+    },
+    {
+      "year": 2023,
+      "total_jobs": 2300000,
+      "growth_percentage": 10,
+      "key_drivers": [
+        "Digital Transformation",
+        "Fintech Expansion",
+        "Startup Ecosystem Growth"
+      ],
+      "notes": "Accelerated job growth due to increased digital initiatives and vibrant startup culture."
+    },
+    {
+      "year": 2024,
+      "total_jobs": 2600000,
+      "growth_percentage": 12,
+      "key_drivers": [
+        "Smart City Projects",
+        "Educational Sector Growth",
+        "Increased Outsourcing"
+      ],
+      "notes": "Rapid expansion expected with major investments in smart infrastructure and enhanced educational services."
+    }
+  ]
+}

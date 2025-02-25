@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPulse - Job Roles & Salaries</title>
+    <link rel="icon" href="assets/jobpulse_logo.png" type="image/icon type">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- AOS CSS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c; /* Dark theme background */
+            color: #e5e7eb; /* Light gray text for readability */
+            font-family: 'Arial', sans-serif;
+        }
+        /* Custom animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        /* Sections and containers */
+        .section-card, .filters, .chart-container {
+            background-color: #2d3748;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .section-card:hover, .filters:hover, .chart-container:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        /* Table styling for dark theme */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            background-color: #2d3748;
+            border: 1px solid #4a5568;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        table:hover {
+            box-shadow: 0 6px 12px rgba(31, 41, 55, 0.4);
+        }
+        th, td {
+            border: 1px solid #4a5568;
+            padding: 12px;
+            text-align: left;
+            color: #e5e7eb;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+            cursor: pointer;
+        }
+        th:hover {
+            background-color: #357abd;
+        }
+        tr:nth-child(even) {
+            background-color: #2d3748;
+        }
+        tr:hover {
+            background-color: #384454;
+        }
+        /* Responsive table for mobile */
+        .overflow-x-auto {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+        }
+        /* Filters, skills, and career paths */
+        .filters, .skills-grid, .career-paths {
+            background-color: #2d3748;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        select, button {
+            background-color: #4a5568;
+            color: #e5e7eb;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            padding: 0.5rem;
+        }
+        select:hover, button:hover {
+            background-color: #5a6b85;
+        }
+        /* Hamburger menu for dark theme */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #1F51FF;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #1f2937;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 0.5rem 0;
+                text-align: center;
+                color: #e5e7eb;
+                font-size: 1rem; /* Reduced for mobile */
+            }
+            .nav-menu a:hover {
+                color: #1F51FF;
+            }
+            /* Hamburger animation when active */
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+            /* Mobile adjustments for sections */
+            h1, h2, h3 {
+                font-size: 1.5rem; /* Smaller headings on mobile */
+            }
+            p {
+                font-size: 0.875rem; /* Smaller text on mobile */
+            }
+            .section-card, .filters, .chart-container {
+                padding: 0.75rem;
+            }
+            th, td {
+                padding: 8px; /* Reduced padding for mobile */
+                font-size: 0.875rem; /* Smaller text for mobile */
+            }
+            .filters, .skills-grid, .career-paths {
+                padding: 0.75rem;
+            }
+            .grid-cols-1, .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr; /* Stack all grids on mobile */
+            }
+            select, button {
+                font-size: 0.875rem; /* Smaller inputs on mobile */
+                padding: 0.375rem;
+            }
+            .chart-container {
+                max-width: 100%; /* Full width on mobile */
+                height: auto;
+            }
+        }
+        /* Footer styling */
+        footer {
+            background-color: #1f2937;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Header with Hamburger Menu -->
+    <header class="bg-gray-800 shadow-md p-4 flex justify-between items-center sticky top-0 z-10" data-aos="fade-down" data-aos-duration="800">
+        <div class="flex items-center" data-aos="zoom-in" data-aos-delay="200">
+            <img src="assets/jobpulse_logo.png" alt="JobPulse Logo" class="w-10 h-10 mr-2">
+            <h1 class="text-2xl font-bold text-white">JobPulse</h1>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-menu space-x-6 md:flex md:items-center" data-aos="fade-left" data-aos-delay="400">
+            <a href="home.html" class="hover:text-blue-500 text-white transition-colors">Home</a>
+            <a href="industries.html" class="hover:text-blue-500 text-white transition-colors">Industries</a>
+            <a href="#" class="hover:text-blue-500 text-white transition-colors">Roles & Salaries</a>
+            <a href="skills.html" class="hover:text-blue-500 text-white transition-colors">Skills</a>
+            <a href="trends.html" class="hover:text-blue-500 text-white transition-colors">Trends</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <section class="py-12 px-4 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <!-- Page Title & Introduction -->
+        <div class="text-center mb-8" data-aos="fade-down" data-aos-delay="200">
+            <h1 class="text-4xl font-bold text-white mb-4">Explore Top Job Roles & Their Salaries</h1>
+            <p class="text-lg text-gray-300">Overview of top job roles, salaries, and industry demand in 2025.</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters mb-8" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex flex-col md:flex-row gap-4">
+                <select id="industryFilter" class="w-full md:w-auto">
+                    <option value="all">All Industries</option>
+                    <option value="Information Technology (IT) and IT-Enabled Services (ITES)">Technology</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Financial Services">Finance</option>
+                    <option value="Pharmaceuticals and Biotechnology">Pharmaceuticals</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Education">Education</option>
+                </select>
+                <select id="salaryRangeFilter" class="w-full md:w-auto">
+                    <option value="all">All Salaries</option>
+                    <option value="0-1000000">₹0 - ₹1,000,000</option>
+                    <option value="1000001-1500000">₹1,000,001 - ₹1,500,000</option>
+                    <option value="1500001-">₹1,500,001+</option>
+                </select>
+                <button id="applyFiltersBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors w-full md:w-auto">Apply Filters</button>
+            </div>
+        </div>
+
+        <!-- Job Roles Table -->
+        <div class="section-card mb-8" data-aos="fade-up" data-aos-delay="400">
+            <h2 class="text-2xl font-semibold text-white mb-4">Job Roles & Salaries</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 cursor-pointer" onclick="sortTable('role')">Job Role</th>
+                            <th class="px-4 py-2 cursor-pointer" onclick="sortTable('salary')">Avg Salary (₹/USD)</th>
+                            <th class="px-4 py-2 cursor-pointer" onclick="sortTable('growth')">Job Growth (%)</th>
+                            <th class="px-4 py-2 cursor-pointer" onclick="sortTable('industry')">Industry</th>
+                            <th class="px-4 py-2 cursor-pointer" onclick="sortTable('experience')">Experience Levels</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobRolesTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Top Skills in Demand -->
+        <div class="section-card mb-8" data-aos="fade-up" data-aos-delay="500">
+            <h2 class="text-2xl font-semibold text-white mb-4">Top Skills in Demand</h2>
+            <div class="skills-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="skillsSection"></div>
+        </div>
+
+        <!-- Salary Pie Chart -->
+        <div class="section-card mb-8" data-aos="fade-up" data-aos-delay="600">
+            <h2 class="text-2xl font-semibold text-white mb-4">Salary Pie Chart by Region</h2>
+            <div class="chart-container">
+                <canvas id="salaryHeatmap" width="600" height="400"></canvas>
+            </div>
+        </div>
+
+        <!-- Top Job Roles Section -->
+<div class="section-card mb-8" data-aos="fade-up" data-aos-delay="700">
+    <h2 class="text-2xl font-semibold text-white mb-4">Top Job Roles by Industry</h2>
+    <div class="overflow-y-auto max-h-96 space-y-4" id="topJobRoles">
+        <!-- Cards will be populated dynamically via JavaScript -->
+    </div>
+</div>
+
+<script>
+    // JSON Data for Top Job Roles
+    const topJobRolesData = {
+        "job_roles": [
+            {
+                "role": "AI Engineer",
+                "avg_salary_inr": 1500000,
+                "avg_salary_usd": 18072,
+                "job_openings": 60000,
+                "growth_rate": 25,
+                "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                "skills": ["Python", "TensorFlow", "Machine Learning", "Cloud Computing"],
+                "locations": ["Hyderabad", "Pune", "Delhi"],
+                "demand_trend": "Very High",
+                "year": 2025,
+                "country": "India"
+            },
+            {
+                "role": "Investment Banker",
+                "avg_salary_inr": 1800000,
+                "avg_salary_usd": 21687,
+                "job_openings": 15000,
+                "growth_rate": 12,
+                "industry": "Financial Services",
+                "skills": ["Mergers & Acquisitions", "Valuation", "Risk Management", "Finance"],
+                "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                "demand_trend": "High",
+                "year": 2025,
+                "country": "India"
+            },
+            {
+                "role": "Cardiologist",
+                "avg_salary_inr": 2500000,
+                "avg_salary_usd": 30104,
+                "job_openings": 15000,
+                "growth_rate": 18,
+                "industry": "Healthcare",
+                "skills": ["Cardiology", "Patient Care", "Medical Research", "Surgery"],
+                "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                "demand_trend": "Very High",
+                "year": 2025,
+                "country": "India"
+            },
+            {
+                "role": "Cloud Solutions Architect",
+                "avg_salary_inr": 1800000,
+                "avg_salary_usd": 21687,
+                "job_openings": 45000,
+                "growth_rate": 22,
+                "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                "skills": ["AWS", "Azure", "Google Cloud", "DevOps"],
+                "locations": ["Hyderabad", "Bangalore", "Delhi"],
+                "demand_trend": "Extremely High",
+                "year": 2025,
+                "country": "India"
+            },
+            {
+                "role": "Senior Clinical Research Scientist",
+                "avg_salary_inr": 1200000,
+                "avg_salary_usd": 14457,
+                "job_openings": 18000,
+                "growth_rate": 16,
+                "industry": "Pharmaceuticals and Biotechnology",
+                "skills": ["Clinical Research", "Regulatory Compliance", "Pharmacovigilance", "GCP"],
+                "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                "demand_trend": "High",
+                "year": 2025,
+                "country": "India"
+            },
+            {
+                "role": "Manufacturing Operations Director",
+                "avg_salary_inr": 1800000,
+                "avg_salary_usd": 21687,
+                "job_openings": 15000,
+                "growth_rate": 10,
+                "industry": "Manufacturing",
+                "skills": ["Operations Management", "Supply Chain", "Lean Six Sigma", "Budgeting"],
+                "locations": ["Hyderabad", "Delhi", "Ahmedabad"],
+                "demand_trend": "Very High",
+                "year": 2025,
+                "country": "India"
+            }
+        ]
+    };
+
+    // Populate Top Job Roles Cards
+    document.addEventListener('DOMContentLoaded', () => {
+        populateTopJobRoles();
+    });
+
+    function populateTopJobRoles() {
+        const topJobRolesContainer = document.getElementById('topJobRoles');
+        topJobRolesContainer.innerHTML = ''; // Clear existing content
+
+        topJobRolesData.job_roles.forEach(role => {
+            const card = document.createElement('div');
+            card.className = 'flex flex-col md:flex-row bg-gray-700 rounded-lg p-4 hover-scale shadow-md h-auto w-full';
+            card.innerHTML = `
+                <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                    <img src="assets/${role.role.toLowerCase().replace(/ /g, '-')}.webp" alt="${role.role} Image" class="w-full h-48 object-cover rounded-md">
+                </div>
+                <div class="w-full md:w-2/3 md:pl-4">
+                    <h4 class="text-xl font-semibold text-white mb-2">${role.role}</h4>
+                    <p class="text-gray-200"><strong>Industry:</strong> ${role.industry}</p>
+                    <p class="text-gray-200"><strong>Avg Salary:</strong> ₹${role.avg_salary_inr.toLocaleString()} (${role.avg_salary_usd}K USD)</p>
+                    <p class="text-gray-200"><strong>Job Openings:</strong> ${role.job_openings.toLocaleString()}</p>
+                    <p class="text-gray-200"><strong>Growth Rate:</strong> ${role.growth_rate}% 📈</p>
+                    <p class="text-gray-200"><strong>Demand Trend:</strong> ${role.demand_trend}</p>
+                    <p class="text-gray-200"><strong>Skills:</strong> ${role.skills.join(', ')}</p>
+                    <p class="text-gray-200"><strong>Locations:</strong> ${role.locations.join(', ')}</p>
+                    <p class="text-gray-200"><strong>Year:</strong> ${role.year}</p>
+                    <p class="text-gray-200"><strong>Country:</strong> ${role.country}</p>
+                </div>
+            `;
+            topJobRolesContainer.appendChild(card);
+        });
+    }
+</script>
+
+        <!-- Career Path & Progression -->
+        <div class="section-card mb-8" data-aos="fade-up" data-aos-delay="800">
+            <h2 class="text-2xl font-semibold text-white mb-4">Career Path & Progression</h2>
+            <div class="career-paths grid grid-cols-1 md:grid-cols-2 gap-4" id="careerPaths"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 text-center" data-aos="fade-up" data-aos-duration="1000">
+        <p>© 2025 JobPulse. All rights reserved.</p>
+    </footer>
+
+    <!-- AOS JS CDN -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- JavaScript for AOS, Chart, Filters, Table, and Hamburger Menu -->
+    <script>
+        // Initialize AOS
+        AOS.init();
+
+        // JSON Data
+        const jobRolesData = {
+            "job_roles": [
+                {
+                    "role": "Data Analyst",
+                    "avg_salary_inr": 900000,
+                    "avg_salary_usd": 10843,
+                    "job_openings": 80000,
+                    "growth_rate": 18,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["SQL", "Python", "Data Visualization", "Tableau"],
+                    "locations": ["Hyderabad", "Bangalore", "Mumbai"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "AI Engineer",
+                    "avg_salary_inr": 1500000,
+                    "avg_salary_usd": 18072,
+                    "job_openings": 60000,
+                    "growth_rate": 25,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["Python", "TensorFlow", "Machine Learning", "Cloud Computing"],
+                    "locations": ["Hyderabad", "Pune", "Delhi"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Cloud Solutions Architect",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 45000,
+                    "growth_rate": 22,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["AWS", "Azure", "Google Cloud", "DevOps"],
+                    "locations": ["Hyderabad", "Bangalore", "Delhi"],
+                    "demand_trend": "Extremely High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Software Engineer",
+                    "avg_salary_inr": 1100000,
+                    "avg_salary_usd": 13253,
+                    "job_openings": 120000,
+                    "growth_rate": 15,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["Java", "JavaScript", "React", "AWS"],
+                    "locations": ["Hyderabad", "Chennai", "Bangalore"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Registered Nurse",
+                    "avg_salary_inr": 600000,
+                    "avg_salary_usd": 7229,
+                    "job_openings": 50000,
+                    "growth_rate": 12,
+                    "industry": "Healthcare",
+                    "skills": ["Nursing", "Patient Care", "Medical Knowledge", "Communication"],
+                    "locations": ["Hyderabad", "Kolkata", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Medical Consultant",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14458,
+                    "job_openings": 30000,
+                    "growth_rate": 15,
+                    "industry": "Healthcare",
+                    "skills": ["Medical Diagnosis", "Patient Consultation", "Healthcare Management", "Research"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Cardiologist",
+                    "avg_salary_inr": 2500000,
+                    "avg_salary_usd": 30104,
+                    "job_openings": 15000,
+                    "growth_rate": 18,
+                    "industry": "Healthcare",
+                    "skills": ["Cardiology", "Patient Care", "Medical Research", "Surgery"],
+                    "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Financial Analyst",
+                    "avg_salary_inr": 1000000,
+                    "avg_salary_usd": 12048,
+                    "job_openings": 35000,
+                    "growth_rate": 10,
+                    "industry": "Financial Services",
+                    "skills": ["Excel", "Financial Modeling", "Risk Analysis", "CFA"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Private Equity Analyst",
+                    "avg_salary_inr": 1400000,
+                    "avg_salary_usd": 16867,
+                    "job_openings": 25000,
+                    "growth_rate": 12,
+                    "industry": "Financial Services",
+                    "skills": ["Equity Research", "Financial Forecasting", "LBO Modeling", "Valuation"],
+                    "locations": ["Hyderabad", "Mumbai", "Gurgaon"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Clinical Research Associate (CRA)",
+                    "avg_salary_inr": 850000,
+                    "avg_salary_usd": 10241,
+                    "job_openings": 25000,
+                    "growth_rate": 14,
+                    "industry": "Pharmaceuticals and Biotechnology",
+                    "skills": ["Clinical Trials", "Regulatory Affairs", "Data Analysis", "GCP"],
+                    "locations": ["Hyderabad", "Bangalore", "Pune"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Senior Clinical Research Scientist",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14457,
+                    "job_openings": 18000,
+                    "growth_rate": 16,
+                    "industry": "Pharmaceuticals and Biotechnology",
+                    "skills": ["Clinical Research", "Regulatory Compliance", "Pharmacovigilance", "GCP"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Director of Drug Development",
+                    "avg_salary_inr": 2200000,
+                    "avg_salary_usd": 26525,
+                    "job_openings": 9000,
+                    "growth_rate": 12,
+                    "industry": "Pharmaceuticals and Biotechnology",
+                    "skills": ["Drug Discovery", "Regulatory Affairs", "Clinical Strategy", "Pharmacology"],
+                    "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },                                
+                {
+                    "role": "Cloud Architect",
+                    "avg_salary_inr": 1400000,
+                    "avg_salary_usd": 16867,
+                    "job_openings": 45000,
+                    "growth_rate": 20,
+                    "industry": "Information Technology (IT) and IT-Enabled Services (ITES)",
+                    "skills": ["AWS", "Azure", "Google Cloud", "DevOps"],
+                    "locations": ["Hyderabad", "Bangalore", "Chennai"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Mechanical Engineer",
+                    "avg_salary_inr": 800000,
+                    "avg_salary_usd": 9639,
+                    "job_openings": 30000,
+                    "growth_rate": 13,
+                    "industry": "Manufacturing",
+                    "skills": ["CAD", "AutoCAD", "Thermodynamics", "Project Management"],
+                    "locations": ["Hyderabad", "Pune", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Industrial Automation Engineer",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14458,
+                    "job_openings": 25000,
+                    "growth_rate": 15,
+                    "industry": "Manufacturing",
+                    "skills": ["PLC Programming", "SCADA", "Robotics", "Lean Manufacturing"],
+                    "locations": ["Hyderabad", "Bangalore", "Mumbai"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Manufacturing Operations Director",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 15000,
+                    "growth_rate": 10,
+                    "industry": "Manufacturing",
+                    "skills": ["Operations Management", "Supply Chain", "Lean Six Sigma", "Budgeting"],
+                    "locations": ["Hyderabad", "Delhi", "Ahmedabad"],
+                    "demand_trend": "Very High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Investment Banker",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 15000,
+                    "growth_rate": 12,
+                    "industry": "Financial Services",
+                    "skills": ["Mergers & Acquisitions", "Valuation", "Risk Management", "Finance"],
+                    "locations": ["Hyderabad", "Mumbai", "Delhi"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "University Professor",
+                    "avg_salary_inr": 700000,
+                    "avg_salary_usd": 8434,
+                    "job_openings": 15000,
+                    "growth_rate": 8,
+                    "industry": "Education",
+                    "skills": ["Teaching", "Research", "Curriculum Development", "Academic Writing"],
+                    "locations": ["Hyderabad", "Delhi", "Bangalore"],
+                    "demand_trend": "Low",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Education Technology Specialist",
+                    "avg_salary_inr": 1200000,
+                    "avg_salary_usd": 14458,
+                    "job_openings": 10000,
+                    "growth_rate": 12,
+                    "industry": "Education",
+                    "skills": ["E-Learning Platforms", "Instructional Design", "Learning Management Systems (LMS)", "Data Analytics"],
+                    "locations": ["Hyderabad", "Mumbai", "Chennai"],
+                    "demand_trend": "Moderate",
+                    "year": 2025,
+                    "country": "India"
+                },
+                {
+                    "role": "Dean / Academic Director",
+                    "avg_salary_inr": 1800000,
+                    "avg_salary_usd": 21687,
+                    "job_openings": 5000,
+                    "growth_rate": 6,
+                    "industry": "Education",
+                    "skills": ["Leadership", "Higher Education Policy", "Financial Management", "Strategic Planning"],
+                    "locations": ["Hyderabad", "Delhi", "Pune"],
+                    "demand_trend": "High",
+                    "year": 2025,
+                    "country": "India"
+                }
+            ]
+        };
+
+        // Convert salaries from INR to USD for display (assuming 1 USD = 83 INR for simplicity)
+        const usdRate = 83;
+
+        // Salary Pie Chart Data (Average salary distribution across all job roles for all regions)
+        const salaryHeatmapData = {
+            "job_roles": [
+                {
+                    "role": "Software Engineer",
+                    "usa": 120000,
+                    "europe": 95000,
+                    "asia": 70000,
+                    "uk": 110000,
+                    "india": 55000,
+                    "australia": 115000
+                },
+                {
+                    "role": "Data Analyst",
+                    "usa": 130000,
+                    "europe": 100000,
+                    "asia": 75000,
+                    "uk": 115000,
+                    "india": 60000,
+                    "australia": 120000
+                },
+                {
+                    "role": "Cybersecurity Analyst",
+                    "usa": 115000,
+                    "europe": 90000,
+                    "asia": 72000,
+                    "uk": 105000,
+                    "india": 58000,
+                    "australia": 110000
+                },
+                {
+                    "role": "Cloud Architect",
+                    "usa": 140000,
+                    "europe": 110000,
+                    "asia": 80000,
+                    "uk": 125000,
+                    "india": 65000,
+                    "australia": 130000
+                },
+                {
+                    "role": "AI Engineer",
+                    "usa": 150000,
+                    "europe": 115000,
+                    "asia": 85000,
+                    "uk": 135000,
+                    "india": 70000,
+                    "australia": 140000
+                },
+                {
+                    "role": "Financial Analyst",
+                    "usa": 90000,
+                    "europe": 75000,
+                    "asia": 50000,
+                    "uk": 85000,
+                    "india": 45000,
+                    "australia": 90000
+                },
+                {
+                    "role": "Registered Nurse",
+                    "usa": 75000,
+                    "europe": 65000,
+                    "asia": 45000,
+                    "uk": 70000,
+                    "india": 40000,
+                    "australia": 75000
+                },
+                {
+                    "role": "Clinical Research Associate (CRA)",
+                    "usa": 85000,
+                    "europe": 70000,
+                    "asia": 55000,
+                    "uk": 80000,
+                    "india": 50000,
+                    "australia": 85000
+                },
+                {
+                    "role": "Mechanical Engineer",
+                    "usa": 95000,
+                    "europe": 80000,
+                    "asia": 60000,
+                    "uk": 90000,
+                    "india": 50000,
+                    "australia": 95000
+                },
+                {
+                    "role": "Investment Banker",
+                    "usa": 180000,
+                    "europe": 140000,
+                    "asia": 100000,
+                    "uk": 165000,
+                    "india": 80000,
+                    "australia": 170000
+                },
+                {
+                    "role": "University Professor",
+                    "usa": 80000,
+                    "europe": 70000,
+                    "asia": 50000,
+                    "uk": 75000,
+                    "india": 45000,
+                    "australia": 80000
+                }
+            ]
+        };
+
+        let sortDirection = 1; // 1 for ascending, -1 for descending
+        let lastSortedColumn = '';
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', () => {
+            populateJobRolesTable();
+            populateSkillsSection();
+            createSalaryPieChart();
+            populateCareerPaths();
+            setupFilters();
+            setupSorting();
+
+            // Hamburger Menu Toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+        });
+
+        function populateJobRolesTable(data = jobRolesData.job_roles) {
+            const tableBody = document.getElementById('jobRolesTable');
+            tableBody.innerHTML = '';
+
+            data.forEach(role => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-2">${role.role}</td>
+                    <td class="px-4 py-2">₹${role.avg_salary_inr.toLocaleString()} (${role.avg_salary_usd}K USD)</td>
+                    <td class="px-4 py-2">${role.growth_rate}% 📈</td>
+                    <td class="px-4 py-2">${role.industry}</td>
+                    <td class="px-4 py-2">${getExperienceLevels(role.avg_salary_usd)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function getExperienceLevels(avgSalaryUSD) {
+            let entry = Math.floor(avgSalaryUSD * 0.7); // 70% of avg for entry
+            let mid = avgSalaryUSD; // Avg for mid-level
+            let senior = Math.ceil(avgSalaryUSD * 1.3); // 130% of avg for senior
+            return `$${entry}K - $${mid}K - $${senior}K`;
+        }
+
+        function populateSkillsSection() {
+            const skillsSection = document.getElementById('skillsSection');
+            skillsSection.innerHTML = ''; // Clear existing content
+            jobRolesData.job_roles.forEach(role => {
+                const card = document.createElement('div');
+                card.className = 'p-4 bg-gray-700 rounded-lg hover-scale';
+                card.innerHTML = `
+                    <h4 class="text-lg font-semibold text-white">${role.role}</h4>
+                    <ul class="list-disc list-inside text-gray-200 mt-2">
+                        ${role.skills.map(skill => `<li>${skill}</li>`).join('')}
+                    </ul>
+                `;
+                skillsSection.appendChild(card);
+            });
+        }
+
+        function createSalaryPieChart() {
+            const ctx = document.getElementById('salaryHeatmap').getContext('2d');
+            if (!ctx) {
+                console.error('Canvas context for salaryHeatmap not found');
+                return;
+            }
+
+            // Calculate average salary across all job roles for each region
+            const regionSums = {
+                usa: 0, europe: 0, asia: 0, uk: 0, india: 0, australia: 0
+            };
+            salaryHeatmapData.job_roles.forEach(role => {
+                regionSums.usa += role.usa;
+                regionSums.europe += role.europe;
+                regionSums.asia += role.asia;
+                regionSums.uk += role.uk;
+                regionSums.india += role.india;
+                regionSums.australia += role.australia;
+            });
+            const numRoles = salaryHeatmapData.job_roles.length;
+            const regionAverages = {
+                usa: regionSums.usa / numRoles,
+                europe: regionSums.europe / numRoles,
+                asia: regionSums.asia / numRoles,
+                uk: regionSums.uk / numRoles,
+                india: regionSums.india / numRoles,
+                australia: regionSums.australia / numRoles
+            };
+
+            const pieData = {
+                labels: ['USA', 'Europe', 'Asia', 'UK', 'India', 'Australia'],
+                datasets: [{
+                    data: Object.values(regionAverages),
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.8)',   // USA (Teal)
+                        'rgba(255, 159, 64, 0.8)',   // Europe (Orange)
+                        'rgba(255, 99, 132, 0.8)',   // Asia (Pink)
+                        'rgba(54, 162, 235, 0.8)',   // UK (Blue)
+                        'rgba(153, 102, 255, 0.8)',  // India (Purple)
+                        'rgba(255, 206, 86, 0.8)'    // Australia (Yellow)
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',     // USA
+                        'rgba(255, 159, 64, 1)',     // Europe
+                        'rgba(255, 99, 132, 1)',     // Asia
+                        'rgba(54, 162, 235, 1)',     // UK
+                        'rgba(153, 102, 255, 1)',    // India
+                        'rgba(255, 206, 86, 1)'      // Australia
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            try {
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: pieData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#e5e7eb' } },
+                            title: {
+                                display: true,
+                                text: 'Average Salary Distribution by Region (Pie Chart)',
+                                color: '#ffffff',
+                                font: { size: 16, weight: 'bold' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const region = context.label;
+                                        const total = pieData.datasets[0].data.reduce((a, b) => a + b, 0);
+                                        const value = context.raw;
+                                        const percentage = ((value / total) * 100).toFixed(2);
+                                        const roleAverages = salaryHeatmapData.job_roles.map(role => ({
+                                            role: role.role,
+                                            salary: role[region.toLowerCase()]
+                                        }));
+                                        return [
+                                            `${region}: $${value} USD (${percentage}%)`,
+                                            ...roleAverages.map(r => `${r.role}: $${r.salary} USD`)
+                                        ];
+                                    }
+                                },
+                                bodyColor: '#e5e7eb',
+                                backgroundColor: '#2d3748'
+                            }
+                        },
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true,
+                            duration: 1500,
+                            easing: 'easeOutBounce'
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error creating salary pie chart:', error);
+            }
+        }
+
+        function populateCareerPaths() {
+            const careerPaths = document.getElementById('careerPaths');
+            careerPaths.innerHTML = ''; // Clear existing content
+            jobRolesData.job_roles.forEach(role => {
+                const card = document.createElement('div');
+                card.className = 'p-4 bg-gray-700 rounded-lg hover-scale';
+                card.innerHTML = `
+                    <h4 class="text-lg font-semibold text-white">${role.role}</h4>
+                    <ul class="list-disc list-inside text-gray-200 mt-2">
+                        <li>Entry Level: Junior ${role.role} ($${Math.floor(role.avg_salary_usd * 0.7)}K)</li>
+                        <li>Mid Level: ${role.role} ($${role.avg_salary_usd}K)</li>
+                        <li>Senior Level: Senior ${role.role} ($${Math.ceil(role.avg_salary_usd * 1.3)}K)</li>
+                        <li>Executive Level: Director/Lead ($${Math.ceil(role.avg_salary_usd * 1.5)}K+)</li>
+                    </ul>
+                `;
+                careerPaths.appendChild(card);
+            });
+        }
+
+        function setupFilters() {
+            const industryFilter = document.getElementById('industryFilter');
+            const salaryRangeFilter = document.getElementById('salaryRangeFilter');
+            const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+
+            applyFiltersBtn.addEventListener('click', () => {
+                let filteredData = jobRolesData.job_roles;
+
+                if (industryFilter.value !== 'all') {
+                    filteredData = filteredData.filter(role => role.industry === industryFilter.value);
+                }
+
+                if (salaryRangeFilter.value !== 'all') {
+                    const [min, max] = salaryRangeFilter.value.split('-').map(Number);
+                    filteredData = filteredData.filter(role => {
+                        const salary = role.avg_salary_inr;
+                        if (max) {
+                            return salary >= min && salary <= max;
+                        } else {
+                            return salary >= min;
+                        }
+                    });
+                }
+
+                populateJobRolesTable(filteredData);
+                populateSkillsSection(filteredData);
+                populateCareerPaths(filteredData);
+            });
+        }
+
+        function setupSorting() {
+            let sortDirection = 1; // 1 for ascending, -1 for descending
+            let lastSortedColumn = '';
+
+            function sortTable(column) {
+                if (lastSortedColumn === column) {
+                    sortDirection *= -1;
+                } else {
+                    sortDirection = 1;
+                }
+                lastSortedColumn = column;
+
+                const data = [...jobRolesData.job_roles];
+                data.sort((a, b) => {
+                    let valueA, valueB;
+                    switch (column) {
+                        case 'role':
+                            valueA = a.role.toLowerCase();
+                            valueB = b.role.toLowerCase();
+                            return sortDirection * valueA.localeCompare(valueB);
+                        case 'salary':
+                            valueA = a.avg_salary_usd;
+                            valueB = b.avg_salary_usd;
+                            return sortDirection * (valueA - valueB);
+                        case 'growth':
+                            valueA = a.growth_rate;
+                            valueB = b.growth_rate;
+                            return sortDirection * (valueA - valueB);
+                        case 'industry':
+                            valueA = a.industry.toLowerCase();
+                            valueB = b.industry.toLowerCase();
+                            return sortDirection * valueA.localeCompare(valueB);
+                        case 'experience':
+                            valueA = a.avg_salary_usd;
+                            valueB = b.avg_salary_usd;
+                            return sortDirection * (valueA - valueB);
+                        default:
+                            return 0;
+                    }
+                });
+                populateJobRolesTable(data);
+                populateSkillsSection(data);
+                populateCareerPaths(data);
+            }
+        }
+    </script>
+</body>
+</html>

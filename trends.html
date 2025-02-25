@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPulse - Trends</title>
+    <link rel="icon" href="assets/jobpulse_logo.png" type="image/icon type">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <!-- jQuery CDN (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS CDN -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- AOS CSS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide/dist/umd/lucide.min.js"></script>
+    <!-- Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .bluish-accent {
+            background-color: #3182ce;
+            color: white;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .hover-effect:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #e2e8f0; /* Light color for dark theme */
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #2d3748; /* Dark background for mobile */
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                padding: 1rem;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 0.5rem 0;
+                text-align: center;
+                color: #e2e8f0;
+            }
+            .nav-menu a:hover {
+                color: #3182ce; /* Bluish hover color */
+            }
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+                background: #3182ce;
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+                background: #3182ce;
+            }
+        }
+        /* DataTables Customization */
+        .dataTables_wrapper .dataTables_filter input {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+        }
+        .dataTables_wrapper .dataTables_length select {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border: 1px solid #4a5568;
+        }
+        table.dataTable thead th {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+        table.dataTable tbody tr {
+            background-color: #1a202c;
+        }
+        table.dataTable tbody tr:hover {
+            background-color: #2d3748;
+        }
+
+        /* Mobile-responsive table styles for DataTables */
+@media (max-width: 768px) {
+    #jobMarketTable {
+        font-size: 0.8rem;
+    }
+    #jobMarketTable th,
+    #jobMarketTable td {
+        padding: 0.5rem 0.25rem;
+    }
+    #jobMarketTable_wrapper .dataTables_filter input,
+    #jobMarketTable_wrapper .dataTables_length select {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    #jobMarketTable_wrapper .dataTables_paginate {
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Ensure table cells wrap or truncate long content */
+#jobMarketTable td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 shadow-lg sticky top-0 z-10" data-aos="fade-down" data-aos-duration="800">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold" data-aos="zoom-in" data-aos-delay="200">JobPulse</h1>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-menu space-x-6" data-aos="fade-left" data-aos-delay="400">
+                <a href="home.html" class="hover:underline">Home</a>
+                <a href="industries.html" class="hover:underline">Industries</a>
+                <a href="role-salary.html" class="hover:underline">Roles & Salaries</a>
+                <a href="skills.html" class="hover:underline">Skills</a>
+                <a href="#" class="hover:underline">Trends</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-10 flex-grow">
+        <!-- Title Section -->
+        <section class="text-center mb-12" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="text-4xl font-bold text-white" data-aos="zoom-in" data-aos-delay="200">How the Job Market is Changing Over Time</h1>
+            <p class="text-lg text-gray-300 mt-2" data-aos="fade-up" data-aos-delay="400">Track historical trends and future projections to understand job market dynamics.</p>
+        </section>
+
+        <!-- Section 1: Job Openings Trend -->
+        <section class="mb-12 glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <h2 class="text-2xl font-semibold text-white mb-4" data-aos="fade-right" data-aos-delay="300">Job Openings Trend (2015-2025)</h2>
+            <div class="flex space-x-4 mb-4">
+                <button id="totalJobsBtn" class="bluish-accent px-4 py-2 rounded-lg">Total Jobs</button>
+                <button id="growthRateBtn" class="bg-gray-600 px-4 py-2 rounded-lg hover:bg-blue-600">Growth Rate</button>
+            </div>
+            <canvas id="jobTrendsChart" class="w-full h-64"></canvas>
+        </section>
+
+        <!-- Section 2: Job Market Data Table -->
+        <section class="mb-12 glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+            <h2 class="text-2xl font-semibold text-white mb-4" data-aos="fade-right" data-aos-delay="500">Job Market Data</h2>
+            <div class="overflow-x-auto">
+                <table id="jobMarketTable" class="w-full text-left min-w-[300px]">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Total Jobs</th>
+                            <th>% Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 3: Industry-Specific Job Trends -->
+        <section class="mb-12 glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+            <h2 class="text-2xl font-semibold text-white mb-4" data-aos="fade-right" data-aos-delay="700">Industry-Specific Trends</h2>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-4">
+                <select id="industrySelect1" class="bg-gray-700 text-white p-2 rounded-lg w-full sm:w-1/2">
+                    <option value="IT">IT</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Pharmaceuticals & BioMedical">Pharmaceuticals & BioMedical</option>
+                    <option value="Education">Education</option>
+                    <option value="E-Commerce">E-Commerce</option>
+                </select>
+                <select id="industrySelect2" class="bg-gray-700 text-white p-2 rounded-lg w-full sm:w-1/2">
+                    <option value="">None</option>
+                    <option value="IT">IT</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Pharmaceuticals & BioMedical">Pharmaceuticals & BioMedical</option>
+                    <option value="Education">Education</option>
+                    <option value="E-Commerce">E-Commerce</option>
+                </select>
+            </div>
+            <canvas id="industryTrendsChart" class="w-full h-64"></canvas>
+        </section>
+
+        <!-- Section 4: Future Job Market Predictions -->
+        <section class="mb-12 glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
+            <h2 class="text-2xl font-semibold text-white mb-4" data-aos="fade-right" data-aos-delay="900">Future Job Market Predictions</h2>
+            <div class="mb-4">
+                <label for="growthSlider" class="text-gray-300">Adjust Growth Rate (%): </label>
+                <input type="range" id="growthSlider" min="1" max="10" value="4" step="0.1" class="w-full bg-gray-700">
+                <span id="growthValue" class="text-blue-400">4%</span>
+            </div>
+            <canvas id="predictionsChart" class="w-full h-64"></canvas>
+        </section>
+
+        <!-- Bonus Section: Top Companies Hiring -->
+        <section class="mb-12 glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">
+            <h2 class="text-2xl font-semibold text-white mb-4" data-aos="fade-right" data-aos-delay="1100">Top Companies Hiring</h2>
+            <select id="companyYearSelect" class="bg-gray-700 text-white p-2 rounded-lg mb-4">
+                <option value="2015">2015</option>
+                <option value="2017">2017</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2023">2023</option>
+                <option value="2025" selected>2025</option>
+            </select>
+            <div id="topCompaniesList" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </section>
+
+        <!-- Bonus Section: Global Job Market Comparison -->
+        <section class="mb-12 glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1200">
+            <h2 class="text-2xl font-semibold text-white mb-4" data-aos="fade-right" data-aos-delay="1300">Global Job Market Comparison</h2>
+            <canvas id="globalComparisonChart" class="w-full h-64"></canvas>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white p-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1400">
+        <div class="container mx-auto text-center">
+            <p>© 2025 JobPulse. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AOS JS CDN -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- JavaScript -->
+    <script>
+        // Initialize AOS
+        AOS.init();
+
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // JSON Data
+        const data = {
+            "job_trends": [
+                {"year": 2015, "total_jobs": 5000000, "growth_rate": 2.5}, {"year": 2016, "total_jobs": 5200000, "growth_rate": 4.0}, {"year": 2017, "total_jobs": 5450000, "growth_rate": 4.8}, {"year": 2018, "total_jobs": 5700000, "growth_rate": 4.6}, {"year": 2019, "total_jobs": 6000000, "growth_rate": 5.3}, {"year": 2020, "total_jobs": 5900000, "growth_rate": -1.7}, {"year": 2021, "total_jobs": 6200000, "growth_rate": 5.1}, {"year": 2022, "total_jobs": 6600000, "growth_rate": 6.4}, {"year": 2023, "total_jobs": 7000000, "growth_rate": 6.1}, {"year": 2024, "total_jobs": 7400000, "growth_rate": 5.7}, {"year": 2025, "total_jobs": 7800000, "growth_rate": 5.4}
+            ],
+            "job_market_table": [
+                {"year": 2015, "total_jobs": 5000000, "growth_rate": 2.5}, {"year": 2016, "total_jobs": 5200000, "growth_rate": 4.0}, {"year": 2017, "total_jobs": 5450000, "growth_rate": 4.8}, {"year": 2018, "total_jobs": 5700000, "growth_rate": 4.6}, {"year": 2019, "total_jobs": 6000000, "growth_rate": 5.3}, {"year": 2020, "total_jobs": 5900000, "growth_rate": -1.7}, {"year": 2021, "total_jobs": 6200000, "growth_rate": 5.1}, {"year": 2022, "total_jobs": 6600000, "growth_rate": 6.4}, {"year": 2023, "total_jobs": 7000000, "growth_rate": 6.1}, {"year": 2024, "total_jobs": 7400000, "growth_rate": 5.7}, {"year": 2025, "total_jobs": 7800000, "growth_rate": 5.4}
+            ],
+            "industries": {
+                "IT": [{"year": 2015, "jobs": 800000}, {"year": 2016, "jobs": 850000}, {"year": 2017, "jobs": 900000}, {"year": 2018, "jobs": 960000}, {"year": 2019, "jobs": 1020000}, {"year": 2020, "jobs": 1100000}, {"year": 2021, "jobs": 1200000}, {"year": 2022, "jobs": 1300000}, {"year": 2023, "jobs": 1400000}, {"year": 2024, "jobs": 1500000}, {"year": 2025, "jobs": 1600000}],
+                "Healthcare": [{"year": 2015, "jobs": 600000}, {"year": 2016, "jobs": 620000}, {"year": 2017, "jobs": 650000}, {"year": 2018, "jobs": 680000}, {"year": 2019, "jobs": 720000}, {"year": 2020, "jobs": 900000}, {"year": 2021, "jobs": 950000}, {"year": 2022, "jobs": 1000000}, {"year": 2023, "jobs": 1100000}, {"year": 2024, "jobs": 1200000}, {"year": 2025, "jobs": 1300000}],
+                "Finance": [{"year": 2015, "jobs": 450000}, {"year": 2016, "jobs": 460000}, {"year": 2017, "jobs": 470000}, {"year": 2018, "jobs": 480000}, {"year": 2019, "jobs": 500000}, {"year": 2020, "jobs": 490000}, {"year": 2021, "jobs": 510000}, {"year": 2022, "jobs": 530000}, {"year": 2023, "jobs": 550000}, {"year": 2024, "jobs": 570000}, {"year": 2025, "jobs": 600000}],
+                "Manufacturing": [{"year": 2015, "jobs": 700000}, {"year": 2016, "jobs": 710000}, {"year": 2017, "jobs": 720000}, {"year": 2018, "jobs": 730000}, {"year": 2019, "jobs": 740000}, {"year": 2020, "jobs": 680000}, {"year": 2021, "jobs": 690000}, {"year": 2022, "jobs": 710000}, {"year": 2023, "jobs": 730000}, {"year": 2024, "jobs": 750000}, {"year": 2025, "jobs": 770000}],
+                "Pharmaceuticals & BioMedical": [{"year": 2015, "jobs": 300000}, {"year": 2016, "jobs": 310000}, {"year": 2017, "jobs": 320000}, {"year": 2018, "jobs": 330000}, {"year": 2019, "jobs": 350000}, {"year": 2020, "jobs": 400000}, {"year": 2021, "jobs": 430000}, {"year": 2022, "jobs": 460000}, {"year": 2023, "jobs": 490000}, {"year": 2024, "jobs": 520000}, {"year": 2025, "jobs": 550000}],
+                "Education": [{"year": 2015, "jobs": 400000}, {"year": 2016, "jobs": 410000}, {"year": 2017, "jobs": 420000}, {"year": 2018, "jobs": 430000}, {"year": 2019, "jobs": 440000}, {"year": 2020, "jobs": 450000}, {"year": 2021, "jobs": 460000}, {"year": 2022, "jobs": 470000}, {"year": 2023, "jobs": 480000}, {"year": 2024, "jobs": 490000}, {"year": 2025, "jobs": 500000}],
+                "E-Commerce": [{"year": 2015, "jobs": 200000}, {"year": 2016, "jobs": 230000}, {"year": 2017, "jobs": 260000}, {"year": 2018, "jobs": 300000}, {"year": 2019, "jobs": 350000}, {"year": 2020, "jobs": 420000}, {"year": 2021, "jobs": 480000}, {"year": 2022, "jobs": 540000}, {"year": 2023, "jobs": 600000}, {"year": 2024, "jobs": 660000}, {"year": 2025, "jobs": 720000}]
+            },
+            "predictions": [
+                {"year": 2026, "expected_jobs": 8200000, "growth_rate": 5.1, "key_industries": {"IT": 1700000, "Healthcare": 1350000, "E-Commerce": 750000}},
+                {"year": 2027, "expected_jobs": 8600000, "growth_rate": 4.9, "key_industries": {"IT": 1800000, "Healthcare": 1400000, "E-Commerce": 780000}},
+                {"year": 2028, "expected_jobs": 9000000, "growth_rate": 4.7, "key_industries": {"IT": 1900000, "Healthcare": 1450000, "E-Commerce": 820000}},
+                {"year": 2029, "expected_jobs": 9400000, "growth_rate": 4.4, "key_industries": {"IT": 2000000, "Healthcare": 1500000, "E-Commerce": 860000}},
+                {"year": 2030, "expected_jobs": 9800000, "growth_rate": 4.3, "key_industries": {"IT": 2100000, "Healthcare": 1550000, "E-Commerce": 900000}},
+                {"year": 2035, "expected_jobs": 10500000, "growth_rate": 3.8, "key_industries": {"IT": 2400000, "Healthcare": 1700000, "E-Commerce": 1000000}},
+                {"year": 2040, "expected_jobs": 11000000, "growth_rate": 3.2, "key_industries": {"IT": 2600000, "Healthcare": 1850000, "E-Commerce": 1100000}}
+            ],
+            "top_companies": [
+                {"year": 2015, "companies": [{"name": "Amazon", "jobs": 150000}, {"name": "Google", "jobs": 120000}, {"name": "Walmart", "jobs": 100000}, {"name": "Ford", "jobs": 80000}, {"name": "IBM", "jobs": 70000}]},
+                {"year": 2017, "companies": [{"name": "Amazon", "jobs": 170000}, {"name": "Google", "jobs": 130000}, {"name": "Walmart", "jobs": 105000}, {"name": "Apple", "jobs": 85000}, {"name": "General Motors", "jobs": 75000}]},
+                {"year": 2019, "companies": [{"name": "Amazon", "jobs": 190000}, {"name": "Google", "jobs": 140000}, {"name": "Walmart", "jobs": 110000}, {"name": "Tesla", "jobs": 90000}, {"name": "Microsoft", "jobs": 80000}]},
+                {"year": 2020, "companies": [{"name": "Amazon", "jobs": 200000}, {"name": "Pfizer", "jobs": 150000}, {"name": "Zoom", "jobs": 130000}, {"name": "Walmart", "jobs": 115000}, {"name": "Moderna", "jobs": 95000}]},
+                {"year": 2023, "companies": [{"name": "Amazon", "jobs": 230000}, {"name": "Tesla", "jobs": 160000}, {"name": "Microsoft", "jobs": 150000}, {"name": "Google", "jobs": 145000}, {"name": "Walmart", "jobs": 120000}]},
+                {"year": 2025, "companies": [{"name": "Amazon", "jobs": 250000}, {"name": "Tesla", "jobs": 180000}, {"name": "Microsoft", "jobs": 160000}, {"name": "Google", "jobs": 150000}, {"name": "ByteDance", "jobs": 140000}]}
+            ],
+            "global_comparison": [
+                {"year": 2015, "countries": {"India": 1200000, "US": 3000000, "UK": 800000, "China": 2500000, "Germany": 600000}},
+                {"year": 2017, "countries": {"India": 1300000, "US": 3200000, "UK": 850000, "China": 2700000, "Germany": 620000}},
+                {"year": 2019, "countries": {"India": 1400000, "US": 3400000, "UK": 900000, "China": 2900000, "Germany": 650000}},
+                {"year": 2020, "countries": {"India": 1500000, "US": 3500000, "UK": 900000, "China": 3000000, "Germany": 640000}},
+                {"year": 2023, "countries": {"India": 1800000, "US": 3800000, "UK": 950000, "China": 3200000, "Germany": 680000}},
+                {"year": 2025, "countries": {"India": 2000000, "US": 4000000, "UK": 1000000, "China": 3400000, "Germany": 720000}}
+            ]
+        };
+
+        // Section 1: Job Openings Trend
+        const jobTrendsCtx = document.getElementById('jobTrendsChart').getContext('2d');
+        let jobTrendsChart = new Chart(jobTrendsCtx, {
+            type: 'line',
+            data: {
+                labels: data.job_trends.map(t => t.year),
+                datasets: [{
+                    label: 'Total Jobs',
+                    data: data.job_trends.map(t => t.total_jobs),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: false } },
+                plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()}` } } }
+            }
+        });
+
+        document.getElementById('totalJobsBtn').addEventListener('click', () => {
+            jobTrendsChart.data.datasets[0].label = 'Total Jobs';
+            jobTrendsChart.data.datasets[0].data = data.job_trends.map(t => t.total_jobs);
+            jobTrendsChart.update();
+            document.getElementById('totalJobsBtn').classList.add('bluish-accent');
+            document.getElementById('growthRateBtn').classList.remove('bluish-accent');
+        });
+
+        document.getElementById('growthRateBtn').addEventListener('click', () => {
+            jobTrendsChart.data.datasets[0].label = 'Growth Rate (%)';
+            jobTrendsChart.data.datasets[0].data = data.job_trends.map(t => t.growth_rate);
+            jobTrendsChart.update();
+            document.getElementById('growthRateBtn').classList.add('bluish-accent');
+            document.getElementById('totalJobsBtn').classList.remove('bluish-accent');
+        });
+
+        // Section 2: Job Market Table
+        $(document).ready(function() {
+            $('#jobMarketTable').DataTable({
+                data: data.job_market_table,
+                columns: [
+                    { data: 'year' },
+                    { data: 'total_jobs', render: $.fn.dataTable.render.number(',', '.', 0) },
+                    { 
+                        data: 'growth_rate',
+                        render: function(data, type, row) {
+                            return type === 'display' && data < 0 ? `<span class="text-red-500">${data}%</span>` : `${data}%`;
+                        }
+                    }
+                ],
+                pageLength: 5,
+                lengthMenu: [5, 10, 25],
+                order: [[0, 'desc']],
+                responsive: true, // Enable DataTables responsive mode
+                language: {
+                    search: "Search:",
+                    lengthMenu: "Show _MENU_ entries",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    paginate: {
+                        previous: "Prev",
+                        next: "Next"
+                    }
+                }
+            });
+        });
+
+        // Section 3: Industry-Specific Trends
+        const industryTrendsCtx = document.getElementById('industryTrendsChart').getContext('2d');
+        let industryTrendsChart = new Chart(industryTrendsCtx, {
+            type: 'line',
+            data: {
+                labels: data.industries.IT.map(i => i.year),
+                datasets: [{
+                    label: 'IT',
+                    data: data.industries.IT.map(i => i.jobs),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                    fill: true
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: false } } }
+        });
+
+        function updateIndustryChart() {
+            const industry1 = document.getElementById('industrySelect1').value;
+            const industry2 = document.getElementById('industrySelect2').value;
+            industryTrendsChart.data.datasets = [
+                {
+                    label: industry1,
+                    data: data.industries[industry1].map(i => i.jobs),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                    fill: true
+                }
+            ];
+            if (industry2) {
+                industryTrendsChart.data.datasets.push({
+                    label: industry2,
+                    data: data.industries[industry2].map(i => i.jobs),
+                    borderColor: '#ed64a6',
+                    backgroundColor: 'rgba(237, 100, 166, 0.2)',
+                    fill: true
+                });
+            }
+            industryTrendsChart.update();
+        }
+
+        document.getElementById('industrySelect1').addEventListener('change', updateIndustryChart);
+        document.getElementById('industrySelect2').addEventListener('change', updateIndustryChart);
+
+        // Section 4: Future Predictions
+        const predictionsCtx = document.getElementById('predictionsChart').getContext('2d');
+        let predictionsChart = new Chart(predictionsCtx, {
+            type: 'bar',
+            data: {
+                labels: data.predictions.map(p => p.year),
+                datasets: [{
+                    label: 'Expected Jobs',
+                    data: data.predictions.map(p => p.expected_jobs),
+                    backgroundColor: '#3182ce'
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: false } } }
+        });
+
+        const growthSlider = document.getElementById('growthSlider');
+        const growthValue = document.getElementById('growthValue');
+        growthSlider.addEventListener('input', () => {
+            const rate = parseFloat(growthSlider.value);
+            growthValue.textContent = `${rate}%`;
+            let lastJobs = data.job_trends[data.job_trends.length - 1].total_jobs;
+            predictionsChart.data.datasets[0].data = data.predictions.map(p => {
+                lastJobs = Math.round(lastJobs * (1 + rate / 100));
+                return lastJobs;
+            });
+            predictionsChart.update();
+        });
+
+        // Bonus Section: Top Companies
+        function updateTopCompanies(year) {
+            const companies = data.top_companies.find(t => t.year === parseInt(year)).companies;
+            const container = document.getElementById('topCompaniesList');
+            container.innerHTML = '';
+            companies.forEach((c, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-800 p-4 rounded-lg hover-effect';
+                div.setAttribute('data-aos', 'fade-up');
+                div.setAttribute('data-aos-delay', `${1100 + index * 100}`);
+                div.innerHTML = `<p class="text-lg font-semibold">${c.name}</p><p class="text-gray-400">${c.jobs.toLocaleString()} Jobs</p>`;
+                container.appendChild(div);
+            });
+            AOS.refresh();
+        }
+        document.getElementById('companyYearSelect').addEventListener('change', (e) => updateTopCompanies(e.target.value));
+        updateTopCompanies('2025');
+
+        // Bonus Section: Global Comparison
+        const globalComparisonCtx = document.getElementById('globalComparisonChart').getContext('2d');
+        new Chart(globalComparisonCtx, {
+            type: 'line',
+            data: {
+                labels: data.global_comparison.map(g => g.year),
+                datasets: Object.keys(data.global_comparison[0].countries).map(country => ({
+                    label: country,
+                    data: data.global_comparison.map(g => g.countries[country]),
+                    borderColor: country === 'India' ? '#3182ce' : ['#ed64a6', '#48bb78', '#ecc94b', '#9f7aea'][Object.keys(data.global_comparison[0].countries).indexOf(country) % 5],
+                    fill: false
+                }))
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: false } } }
+        });
+    </script>
+</body>
+</html>

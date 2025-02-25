@@ -1,0 +1,349 @@
+{
+    "top_skills": [
+      {
+        "skill": "Python",
+        "category": "Programming",
+        "demand_score": 95,
+        "industry_usage": ["IT", "Finance", "Healthcare"],
+        "related_jobs": ["AI Engineer", "Data Scientist", "Software Developer"]
+      },
+      {
+        "skill": "SQL",
+        "category": "Database",
+        "demand_score": 90,
+        "industry_usage": ["IT", "Finance", "Marketing"],
+        "related_jobs": ["Data Analyst", "Database Administrator", "Business Intelligence Analyst"]
+      },
+      {
+        "skill": "Cloud Computing",
+        "category": "IT Infrastructure",
+        "demand_score": 88,
+        "industry_usage": ["IT", "Manufacturing", "Healthcare"],
+        "related_jobs": ["Cloud Solutions Architect", "DevOps Engineer", "IT Administrator"]
+      },
+      {
+        "skill": "Cybersecurity",
+        "category": "Security",
+        "demand_score": 85,
+        "industry_usage": ["IT", "Finance", "Government"],
+        "related_jobs": ["Cybersecurity Analyst", "Ethical Hacker", "Security Engineer"]
+      },
+      {
+        "skill": "Machine Learning",
+        "category": "Artificial Intelligence",
+        "demand_score": 92,
+        "industry_usage": ["IT", "Healthcare", "Automotive"],
+        "related_jobs": ["AI Engineer", "Machine Learning Engineer", "Data Scientist"]
+      },
+      {
+        "skill": "JavaScript",
+        "category": "Programming",
+        "demand_score": 87,
+        "industry_usage": ["IT", "Gaming", "E-commerce"],
+        "related_jobs": ["Frontend Developer", "Full Stack Developer", "Web Developer"]
+      },
+      {
+        "skill": "Data Visualization",
+        "category": "Analytics",
+        "demand_score": 83,
+        "industry_usage": ["IT", "Marketing", "Finance"],
+        "related_jobs": ["Data Analyst", "Business Intelligence Developer", "Marketing Analyst"]
+      },
+      {
+        "skill": "Blockchain",
+        "category": "Emerging Tech",
+        "demand_score": 80,
+        "industry_usage": ["Finance", "IT", "Supply Chain"],
+        "related_jobs": ["Blockchain Developer", "Smart Contract Engineer", "Crypto Analyst"]
+      },
+      {
+        "skill": "Project Management",
+        "category": "Management",
+        "demand_score": 82,
+        "industry_usage": ["IT", "Construction", "Manufacturing"],
+        "related_jobs": ["Project Manager", "Program Manager", "Scrum Master"]
+      },
+      {
+        "skill": "DevOps",
+        "category": "IT Operations",
+        "demand_score": 86,
+        "industry_usage": ["IT", "Telecom", "E-commerce"],
+        "related_jobs": ["DevOps Engineer", "Site Reliability Engineer", "Cloud Engineer"]
+      }
+    ],
+    
+    "skill_to_job_mapping": [
+      {
+        "job_role": "AI Engineer",
+        "required_skills": ["Python", "TensorFlow", "Machine Learning"],
+        "avg_salary_inr": 1500000,
+        "job_openings": 60000
+      },
+      {
+        "job_role": "Investment Banker",
+        "required_skills": ["Financial Modeling", "Excel", "Risk Management"],
+        "avg_salary_inr": 1800000,
+        "job_openings": 15000
+      },
+      {
+        "job_role": "Cardiologist",
+        "required_skills": ["Patient Care", "Medical Research", "Cardiology"],
+        "avg_salary_inr": 2500000,
+        "job_openings": 15000
+      },
+      {
+        "job_role": "Cloud Solutions Architect",
+        "required_skills": ["AWS", "Azure", "Cloud Computing"],
+        "avg_salary_inr": 1800000,
+        "job_openings": 45000
+      },
+      {
+        "job_role": "Data Analyst",
+        "required_skills": ["SQL", "Excel", "Data Visualization"],
+        "avg_salary_inr": 900000,
+        "job_openings": 40000
+      },
+      {
+        "job_role": "Cybersecurity Analyst",
+        "required_skills": ["Cybersecurity", "Network Security", "Ethical Hacking"],
+        "avg_salary_inr": 1200000,
+        "job_openings": 30000
+      },
+      {
+        "job_role": "Frontend Developer",
+        "required_skills": ["JavaScript", "React", "CSS"],
+        "avg_salary_inr": 1000000,
+        "job_openings": 35000
+      },
+      {
+        "job_role": "Blockchain Developer",
+        "required_skills": ["Blockchain", "Solidity", "Cryptography"],
+        "avg_salary_inr": 1400000,
+        "job_openings": 20000
+      },
+      {
+        "job_role": "Project Manager",
+        "required_skills": ["Project Management", "Agile", "Stakeholder Management"],
+        "avg_salary_inr": 1600000,
+        "job_openings": 25000
+      },
+      {
+        "job_role": "Manufacturing Engineer",
+        "required_skills": ["Lean Six Sigma", "Automation", "CAD"],
+        "avg_salary_inr": 1100000,
+        "job_openings": 18000
+      }
+    ],
+  
+    "industry_skill_demand": [
+      {
+        "industry": "IT & Software",
+        "top_skills": ["Cloud Computing", "Python", "Cybersecurity"],
+        "growth_rate": 20,
+        "hiring_companies": ["Google", "Microsoft", "Tata Consultancy Services"]
+      },
+      {
+        "industry": "Healthcare",
+        "top_skills": ["Patient Care", "Medical Research", "AI in Healthcare"],
+        "growth_rate": 18,
+        "hiring_companies": ["Apollo Hospitals", "Pfizer", "Dr. Reddy’s Laboratories"]
+      },
+      {
+        "industry": "Financial Services",
+        "top_skills": ["Financial Modeling", "Risk Management", "Blockchain"],
+        "growth_rate": 15,
+        "hiring_companies": ["HDFC Bank", "Goldman Sachs", "ICICI Bank"]
+      },
+      {
+        "industry": "Manufacturing",
+        "top_skills": ["Lean Six Sigma", "Supply Chain Management", "Automation"],
+        "growth_rate": 12,
+        "hiring_companies": ["Tata Motors", "Siemens", "Hyundai India"]
+      },
+      {
+        "industry": "Pharmaceuticals & Biotechnology",
+        "top_skills": ["Clinical Research", "Pharmacovigilance", "Biostatistics"],
+        "growth_rate": 16,
+        "hiring_companies": ["Biocon", "Sun Pharma", "Cipla"]
+      },
+      {
+        "industry": "Education",
+        "top_skills": ["E-Learning Development", "Instructional Design", "Leadership"],
+        "growth_rate": 10,
+        "hiring_companies": ["BYJU’S", "Unacademy", "EdTech India"]
+      },
+      {
+        "industry": "Telecom",
+        "top_skills": ["5G Technology", "Network Engineering", "DevOps"],
+        "growth_rate": 14,
+        "hiring_companies": ["Jio", "Airtel", "Vodafone Idea"]
+      },
+      {
+        "industry": "E-commerce",
+        "top_skills": ["JavaScript", "Data Analytics", "UX Design"],
+        "growth_rate": 17,
+        "hiring_companies": ["Amazon", "Flipkart", "Myntra"]
+      },
+      {
+        "industry": "Automotive",
+        "top_skills": ["Electric Vehicle Tech", "Machine Learning", "Robotics"],
+        "growth_rate": 13,
+        "hiring_companies": ["Tata Motors", "Mahindra Electric", "Hero MotoCorp"]
+      },
+      {
+        "industry": "Gaming",
+        "top_skills": ["Unity", "C#", "Augmented Reality"],
+        "growth_rate": 19,
+        "hiring_companies": ["Ubisoft India", "Dream11", "Nazara Games"]
+      }
+    ],
+  
+    "skills_gap_analysis": [
+      {
+        "skill": "AI & Machine Learning",
+        "current_supply": 50000,
+        "market_demand": 120000,
+        "gap_percentage": 58,
+        "learning_resources": [
+          {"name": "Coursera - Machine Learning by Stanford", "url": "https://www.coursera.org/learn/machine-learning", "type": "Paid"},
+          {"name": "Google AI Courses", "url": "https://ai.google/education", "type": "Free"}
+        ]
+      },
+      {
+        "skill": "Cybersecurity",
+        "current_supply": 40000,
+        "market_demand": 90000,
+        "gap_percentage": 56,
+        "learning_resources": [
+          {"name": "Udemy - Ethical Hacking", "url": "https://www.udemy.com/course/learn-ethical-hacking-from-scratch/", "type": "Paid"},
+          {"name": "Cybrary - Cybersecurity Fundamentals", "url": "https://www.cybrary.it/course/cybersecurity-fundamentals/", "type": "Free"}
+        ]
+      },
+      {
+        "skill": "Cloud Computing",
+        "current_supply": 60000,
+        "market_demand": 110000,
+        "gap_percentage": 45,
+        "learning_resources": [
+          {"name": "AWS Training", "url": "https://aws.amazon.com/training/", "type": "Free/Paid"},
+          {"name": "Microsoft Learn - Azure", "url": "https://learn.microsoft.com/en-us/training/azure/", "type": "Free"}
+        ]
+      },
+      {
+        "skill": "Blockchain",
+        "current_supply": 25000,
+        "market_demand": 60000,
+        "gap_percentage": 58,
+        "learning_resources": [
+          {"name": "Udemy - Blockchain Basics", "url": "https://www.udemy.com/course/blockchain-technology/", "type": "Paid"},
+          {"name": "IBM Blockchain Essentials", "url": "https://www.ibm.com/training/blockchain", "type": "Free"}
+        ]
+      },
+      {
+        "skill": "Data Visualization",
+        "current_supply": 45000,
+        "market_demand": 85000,
+        "gap_percentage": 47,
+        "learning_resources": [
+          {"name": "Tableau Public Training", "url": "https://www.tableau.com/learn/training", "type": "Free"},
+          {"name": "Coursera - Data Visualization with Python", "url": "https://www.coursera.org/learn/python-for-data-visualization", "type": "Paid"}
+        ]
+      },
+      {
+        "skill": "DevOps",
+        "current_supply": 35000,
+        "market_demand": 75000,
+        "gap_percentage": 53,
+        "learning_resources": [
+          {"name": "Udemy - DevOps Bootcamp", "url": "https://www.udemy.com/course/devops-bootcamp/", "type": "Paid"},
+          {"name": "Linux Foundation - Intro to DevOps", "url": "https://training.linuxfoundation.org/free-devops-training/", "type": "Free"}
+        ]
+      },
+      {
+        "skill": "Project Management",
+        "current_supply": 55000,
+        "market_demand": 95000,
+        "gap_percentage": 42,
+        "learning_resources": [
+          {"name": "PMI - PMP Certification Prep", "url": "https://www.pmi.org/certifications/pmp", "type": "Paid"},
+          {"name": "Google Project Management", "url": "https://www.coursera.org/professional-certificates/google-project-management", "type": "Paid"}
+        ]
+      },
+      {
+        "skill": "JavaScript",
+        "current_supply": 70000,
+        "market_demand": 130000,
+        "gap_percentage": 46,
+        "learning_resources": [
+          {"name": "freeCodeCamp - JavaScript Basics", "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/", "type": "Free"},
+          {"name": "Udemy - Modern JavaScript", "url": "https://www.udemy.com/course/the-complete-javascript-course/", "type": "Paid"}
+        ]
+      }
+    ],
+  
+    "future_proof_skills": [
+      {
+        "skill": "Quantum Computing",
+        "expected_demand_year": 2030,
+        "industries": ["Technology", "Finance", "Research"],
+        "difficulty_level": "Advanced",
+        "description": "Skills in quantum algorithms and hardware development for next-gen computing."
+      },
+      {
+        "skill": "AI Ethics & Policy",
+        "expected_demand_year": 2028,
+        "industries": ["Legal", "Technology", "Government"],
+        "difficulty_level": "Intermediate",
+        "description": "Understanding ethical implications and regulations around AI deployment."
+      },
+      {
+        "skill": "Sustainable Engineering",
+        "expected_demand_year": 2029,
+        "industries": ["Manufacturing", "Energy", "Construction"],
+        "difficulty_level": "Intermediate",
+        "description": "Designing eco-friendly systems and processes for sustainability."
+      },
+      {
+        "skill": "Augmented Reality Development",
+        "expected_demand_year": 2032,
+        "industries": ["Gaming", "Education", "Healthcare"],
+        "difficulty_level": "Advanced",
+        "description": "Creating immersive AR experiences for various applications."
+      },
+      {
+        "skill": "Robotics Process Automation",
+        "expected_demand_year": 2027,
+        "industries": ["Manufacturing", "IT", "Finance"],
+        "difficulty_level": "Intermediate",
+        "description": "Automating repetitive tasks with advanced robotics software."
+      },
+      {
+        "skill": "Genomics & Bioinformatics",
+        "expected_demand_year": 2031,
+        "industries": ["Healthcare", "Biotech", "Research"],
+        "difficulty_level": "Advanced",
+        "description": "Analyzing genetic data for personalized medicine and research."
+      },
+      {
+        "skill": "5G Network Engineering",
+        "expected_demand_year": 2026,
+        "industries": ["Telecom", "IT", "Automotive"],
+        "difficulty_level": "Advanced",
+        "description": "Building and optimizing next-gen 5G networks."
+      },
+      {
+        "skill": "Digital Twin Technology",
+        "expected_demand_year": 2030,
+        "industries": ["Manufacturing", "Construction", "Energy"],
+        "difficulty_level": "Advanced",
+        "description": "Creating virtual replicas for real-time system optimization."
+      },
+      {
+        "skill": "Neuromarketing",
+        "expected_demand_year": 2029,
+        "industries": ["Marketing", "Retail", "Media"],
+        "difficulty_level": "Intermediate",
+        "description": "Using neuroscience to enhance marketing strategies."
+      }
+    ]
+  }

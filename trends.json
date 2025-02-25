@@ -1,0 +1,254 @@
+{
+    "job_trends": [
+      { "year": 2015, "total_jobs": 5000000, "growth_rate": 2.5 },
+      { "year": 2016, "total_jobs": 5200000, "growth_rate": 4.0 },
+      { "year": 2017, "total_jobs": 5450000, "growth_rate": 4.8 },
+      { "year": 2018, "total_jobs": 5700000, "growth_rate": 4.6 },
+      { "year": 2019, "total_jobs": 6000000, "growth_rate": 5.3 },
+      { "year": 2020, "total_jobs": 5900000, "growth_rate": -1.7 },
+      { "year": 2021, "total_jobs": 6200000, "growth_rate": 5.1 },
+      { "year": 2022, "total_jobs": 6600000, "growth_rate": 6.4 },
+      { "year": 2023, "total_jobs": 7000000, "growth_rate": 6.1 },
+      { "year": 2024, "total_jobs": 7400000, "growth_rate": 5.7 },
+      { "year": 2025, "total_jobs": 7800000, "growth_rate": 5.4 }
+    ],
+    "job_market_table": [
+    { "year": 2015, "total_jobs": 5000000, "growth_rate": 2.5 },
+    { "year": 2016, "total_jobs": 5200000, "growth_rate": 4.0 },
+    { "year": 2017, "total_jobs": 5450000, "growth_rate": 4.8 },
+    { "year": 2018, "total_jobs": 5700000, "growth_rate": 4.6 },
+    { "year": 2019, "total_jobs": 6000000, "growth_rate": 5.3 },
+    { "year": 2020, "total_jobs": 5900000, "growth_rate": -1.7 },
+    { "year": 2021, "total_jobs": 6200000, "growth_rate": 5.1 },
+    { "year": 2022, "total_jobs": 6600000, "growth_rate": 6.4 },
+    { "year": 2023, "total_jobs": 7000000, "growth_rate": 6.1 },
+    { "year": 2024, "total_jobs": 7400000, "growth_rate": 5.7 },
+    { "year": 2025, "total_jobs": 7800000, "growth_rate": 5.4 }
+  ],
+  "industries": {
+    "IT": [
+      { "year": 2015, "jobs": 800000 },
+      { "year": 2016, "jobs": 850000 },
+      { "year": 2017, "jobs": 900000 },
+      { "year": 2018, "jobs": 960000 },
+      { "year": 2019, "jobs": 1020000 },
+      { "year": 2020, "jobs": 1100000 },
+      { "year": 2021, "jobs": 1200000 },
+      { "year": 2022, "jobs": 1300000 },
+      { "year": 2023, "jobs": 1400000 },
+      { "year": 2024, "jobs": 1500000 },
+      { "year": 2025, "jobs": 1600000 }
+    ],
+    "Healthcare": [
+      { "year": 2015, "jobs": 600000 },
+      { "year": 2016, "jobs": 620000 },
+      { "year": 2017, "jobs": 650000 },
+      { "year": 2018, "jobs": 680000 },
+      { "year": 2019, "jobs": 720000 },
+      { "year": 2020, "jobs": 900000 },
+      { "year": 2021, "jobs": 950000 },
+      { "year": 2022, "jobs": 1000000 },
+      { "year": 2023, "jobs": 1100000 },
+      { "year": 2024, "jobs": 1200000 },
+      { "year": 2025, "jobs": 1300000 }
+    ],
+    "Finance": [
+      { "year": 2015, "jobs": 450000 },
+      { "year": 2016, "jobs": 460000 },
+      { "year": 2017, "jobs": 470000 },
+      { "year": 2018, "jobs": 480000 },
+      { "year": 2019, "jobs": 500000 },
+      { "year": 2020, "jobs": 490000 },
+      { "year": 2021, "jobs": 510000 },
+      { "year": 2022, "jobs": 530000 },
+      { "year": 2023, "jobs": 550000 },
+      { "year": 2024, "jobs": 570000 },
+      { "year": 2025, "jobs": 600000 }
+    ],
+    "Manufacturing": [
+      { "year": 2015, "jobs": 700000 },
+      { "year": 2016, "jobs": 710000 },
+      { "year": 2017, "jobs": 720000 },
+      { "year": 2018, "jobs": 730000 },
+      { "year": 2019, "jobs": 740000 },
+      { "year": 2020, "jobs": 680000 },
+      { "year": 2021, "jobs": 690000 },
+      { "year": 2022, "jobs": 710000 },
+      { "year": 2023, "jobs": 730000 },
+      { "year": 2024, "jobs": 750000 },
+      { "year": 2025, "jobs": 770000 }
+    ],
+    "Pharmaceuticals & BioMedical": [
+      { "year": 2015, "jobs": 300000 },
+      { "year": 2016, "jobs": 310000 },
+      { "year": 2017, "jobs": 320000 },
+      { "year": 2018, "jobs": 330000 },
+      { "year": 2019, "jobs": 350000 },
+      { "year": 2020, "jobs": 400000 },
+      { "year": 2021, "jobs": 430000 },
+      { "year": 2022, "jobs": 460000 },
+      { "year": 2023, "jobs": 490000 },
+      { "year": 2024, "jobs": 520000 },
+      { "year": 2025, "jobs": 550000 }
+    ],
+    "Education": [
+      { "year": 2015, "jobs": 400000 },
+      { "year": 2016, "jobs": 410000 },
+      { "year": 2017, "jobs": 420000 },
+      { "year": 2018, "jobs": 430000 },
+      { "year": 2019, "jobs": 440000 },
+      { "year": 2020, "jobs": 450000 },
+      { "year": 2021, "jobs": 460000 },
+      { "year": 2022, "jobs": 470000 },
+      { "year": 2023, "jobs": 480000 },
+      { "year": 2024, "jobs": 490000 },
+      { "year": 2025, "jobs": 500000 }
+    ],
+    "E-Commerce": [
+      { "year": 2015, "jobs": 200000 },
+      { "year": 2016, "jobs": 230000 },
+      { "year": 2017, "jobs": 260000 },
+      { "year": 2018, "jobs": 300000 },
+      { "year": 2019, "jobs": 350000 },
+      { "year": 2020, "jobs": 420000 },
+      { "year": 2021, "jobs": 480000 },
+      { "year": 2022, "jobs": 540000 },
+      { "year": 2023, "jobs": 600000 },
+      { "year": 2024, "jobs": 660000 },
+      { "year": 2025, "jobs": 720000 }
+    ]
+  },
+  "predictions": [
+    { "year": 2026, "expected_jobs": 8200000, "growth_rate": 5.1, "key_industries": { "IT": 1700000, "Healthcare": 1350000, "E-Commerce": 750000 } },
+    { "year": 2027, "expected_jobs": 8600000, "growth_rate": 4.9, "key_industries": { "IT": 1800000, "Healthcare": 1400000, "E-Commerce": 780000 } },
+    { "year": 2028, "expected_jobs": 9000000, "growth_rate": 4.7, "key_industries": { "IT": 1900000, "Healthcare": 1450000, "E-Commerce": 820000 } },
+    { "year": 2029, "expected_jobs": 9400000, "growth_rate": 4.4, "key_industries": { "IT": 2000000, "Healthcare": 1500000, "E-Commerce": 860000 } },
+    { "year": 2030, "expected_jobs": 9800000, "growth_rate": 4.3, "key_industries": { "IT": 2100000, "Healthcare": 1550000, "E-Commerce": 900000 } },
+    { "year": 2035, "expected_jobs": 10500000, "growth_rate": 3.8, "key_industries": { "IT": 2400000, "Healthcare": 1700000, "E-Commerce": 1000000 } },
+    { "year": 2040, "expected_jobs": 11000000, "growth_rate": 3.2, "key_industries": { "IT": 2600000, "Healthcare": 1850000, "E-Commerce": 1100000 } }
+  ],
+  "top_companies": [
+    {
+      "year": 2015,
+      "companies": [
+        { "name": "Amazon", "jobs": 150000 },
+        { "name": "Google", "jobs": 120000 },
+        { "name": "Walmart", "jobs": 100000 },
+        { "name": "Ford", "jobs": 80000 },
+        { "name": "IBM", "jobs": 70000 }
+      ]
+    },
+    {
+      "year": 2017,
+      "companies": [
+        { "name": "Amazon", "jobs": 170000 },
+        { "name": "Google", "jobs": 130000 },
+        { "name": "Walmart", "jobs": 105000 },
+        { "name": "Apple", "jobs": 85000 },
+        { "name": "General Motors", "jobs": 75000 }
+      ]
+    },
+    {
+      "year": 2019,
+      "companies": [
+        { "name": "Amazon", "jobs": 190000 },
+        { "name": "Google", "jobs": 140000 },
+        { "name": "Walmart", "jobs": 110000 },
+        { "name": "Tesla", "jobs": 90000 },
+        { "name": "Microsoft", "jobs": 80000 }
+      ]
+    },
+    {
+      "year": 2020,
+      "companies": [
+        { "name": "Amazon", "jobs": 200000 },
+        { "name": "Pfizer", "jobs": 150000 },
+        { "name": "Zoom", "jobs": 130000 },
+        { "name": "Walmart", "jobs": 115000 },
+        { "name": "Moderna", "jobs": 95000 }
+      ]
+    },
+    {
+      "year": 2023,
+      "companies": [
+        { "name": "Amazon", "jobs": 230000 },
+        { "name": "Tesla", "jobs": 160000 },
+        { "name": "Microsoft", "jobs": 150000 },
+        { "name": "Google", "jobs": 145000 },
+        { "name": "Walmart", "jobs": 120000 }
+      ]
+    },
+    {
+      "year": 2025,
+      "companies": [
+        { "name": "Amazon", "jobs": 250000 },
+        { "name": "Tesla", "jobs": 180000 },
+        { "name": "Microsoft", "jobs": 160000 },
+        { "name": "Google", "jobs": 150000 },
+        { "name": "ByteDance", "jobs": 140000 }
+      ]
+    }
+  ],
+  "global_comparison": [
+    {
+      "year": 2015,
+      "countries": {
+        "India": 1200000,
+        "US": 3000000,
+        "UK": 800000,
+        "China": 2500000,
+        "Germany": 600000
+      }
+    },
+    {
+      "year": 2017,
+      "countries": {
+        "India": 1300000,
+        "US": 3200000,
+        "UK": 850000,
+        "China": 2700000,
+        "Germany": 620000
+      }
+    },
+    {
+      "year": 2019,
+      "countries": {
+        "India": 1400000,
+        "US": 3400000,
+        "UK": 900000,
+        "China": 2900000,
+        "Germany": 650000
+      }
+    },
+    {
+      "year": 2020,
+      "countries": {
+        "India": 1500000,
+        "US": 3500000,
+        "UK": 900000,
+        "China": 3000000,
+        "Germany": 640000
+      }
+    },
+    {
+      "year": 2023,
+      "countries": {
+        "India": 1800000,
+        "US": 3800000,
+        "UK": 950000,
+        "China": 3200000,
+        "Germany": 680000
+      }
+    },
+    {
+      "year": 2025,
+      "countries": {
+        "India": 2000000,
+        "US": 4000000,
+        "UK": 1000000,
+        "China": 3400000,
+        "Germany": 720000
+      }
+    }
+  ]
+  }

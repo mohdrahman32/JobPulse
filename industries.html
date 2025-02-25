@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPulse - Industry Insights</title>
+    <link rel="icon" href="assets/jobpulse_logo.png" type="image/icon type">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- AOS CSS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Custom animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        /* Chart and table styling */
+        .chart-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 2px 2px 10px #1f2937;
+        }
+        table:hover{
+            box-shadow: 2px 2px 10px #1F51FF;  
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Table Responsiveness */
+.overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+}
+
+table.min-w-full {
+    min-width: 100%;
+}
+
+@media (max-width: 768px) {
+    table.min-w-full {
+        min-width: 0; /* Allow table to shrink on mobile */
+        width: 100%;
+    }
+
+    th, td {
+        min-width: 120px; /* Minimum width for cells to prevent excessive wrapping */
+        padding: 8px; /* Reduce padding on mobile for compactness */
+        font-size: 0.875rem; /* Smaller text for mobile */
+    }
+
+    th {
+        font-size: 0.875rem; /* Smaller header text on mobile */
+    }
+
+    /* Stack dropdowns and button vertically on mobile */
+    .flex-col {
+        flex-direction: column;
+    }
+
+    #industry1, #industry2, #graphBtn {
+        width: 100%; /* Full width on mobile */
+        margin-bottom: 0.5rem; /* Spacing between stacked elements */
+    }
+}
+
+/* Ensure flip container and graph remain responsive */
+.flip-container, .graph-container {
+    width: 100%;
+}
+
+.flip-front, .flip-back {
+    width: 100%;
+}
+
+
+        /* Hamburger Menu Styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #1F51FF;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #1f2937;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 0.5rem 0;
+                text-align: center;
+                color: #ffffff;
+                font-size: 1.25rem;
+            }
+            .nav-menu a:hover {
+                color: #1F51FF;
+            }
+            /* Hamburger animation when active */
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+        }
+        /* Cards Section Styling */
+        .cards-section {
+            padding: 2rem 0;
+            background-color: #f8f9fa;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .card p {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .card .stats {
+            font-size: 1rem;
+            color: #4a90e2;
+        }
+        /* Flip Animation for Table and Graph */
+        .flip-container {
+            perspective: 1000px;
+        }
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+        }
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+        .graph-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <!-- Header with Hamburger Menu -->
+    <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10" data-aos="fade-down" data-aos-duration="800">
+        <div class="flex items-center" data-aos="zoom-in" data-aos-delay="200">
+            <img src="assets/jobpulse_logo.png" alt="JobPulse Logo" class="w-10 h-10 mr-2">
+            <h1 class="text-2xl font-bold">JobPulse</h1>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-menu space-x-6 md:flex md:items-center" data-aos="fade-left" data-aos-delay="400">
+            <a href="home.html" class="hover:text-blue-500 transition-colors">Home</a>
+            <a href="#" class="hover:text-blue-500 transition-colors">Industries</a>
+            <a href="role-salary.html" class="hover:text-blue-500 transition-colors">Roles & Salaries</a>
+            <a href="skills.html" class="hover:text-blue-500 transition-colors">Skills</a>
+            <a href="trends.html" class="hover:text-blue-500 transition-colors">Trends</a>
+        </nav>
+    </header>
+
+    <!-- Cards Section -->
+    <section class="cards-section max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-2xl font-bold text-center mb-8" data-aos="fade-down" data-aos-delay="200">Top Industries at a Glance</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card for Information Technology (IT) and IT-Enabled Services (ITES) -->
+            <div class="card hover-scale" data-aos="flip-left" data-aos-delay="300">
+                <img src="assets/it.webp" alt="IT Industry" class="w-full h-32 object-cover rounded-t-md mb-4">
+                <h4>Information Technology (IT) and IT-Enabled Services (ITES)</h4>
+                <p>Hyderabad's IT sector has seen significant growth with major global giants.</p>
+                <div class="stats">
+                    Job Openings: 905,715 | Growth Rate: 15% 📈
+                </div>
+            </div>
+            <!-- Card for Pharmaceuticals and Biotechnology -->
+            <div class="card hover-scale" data-aos="flip-right" data-aos-delay="400">
+                <img src="assets/bio.webp" alt="Pharmaceuticals Industry" class="w-full h-32 object-cover rounded-t-md mb-4">
+                <h4>Pharmaceuticals and Biotechnology</h4>
+                <p>Known as the 'Pharma City' of India, contributing to exports and employment.</p>
+                <div class="stats">
+                    Job Openings: 50,000 | Growth Rate: 12% 📈
+                </div>
+            </div>
+            <!-- Card for Manufacturing -->
+            <div class="card hover-scale" data-aos="flip-left" data-aos-delay="500">
+                <img src="assets/manufacture.webp" alt="Manufacturing Industry" class="w-full h-32 object-cover rounded-t-md mb-4">
+                <h4>Manufacturing</h4>
+                <p>Includes electronics, automobiles, aerospace, and food and beverages sectors.</p>
+                <div class="stats">
+                    Job Openings: 40,000 | Growth Rate: 10% 📈
+                </div>
+            </div>
+            <!-- Card for Financial Services -->
+            <div class="card hover-scale" data-aos="flip-right" data-aos-delay="600">
+                <img src="assets/finance.webp" alt="Financial Services Industry" class="w-full h-32 object-cover rounded-t-md mb-4">
+                <h4>Financial Services</h4>
+                <p>Encompasses banking, investment firms, and fintech companies in Hyderabad.</p>
+                <div class="stats">
+                    Job Openings: 30,000 | Growth Rate: 8% 📈
+                </div>
+            </div>
+            <!-- Card for Real Estate and Infrastructure -->
+            <div class="card hover-scale" data-aos="flip-left" data-aos-delay="700">
+                <img src="assets/real-estate.webp" alt="Real Estate Industry" class="w-full h-32 object-cover rounded-t-md mb-4">
+                <h4>Real Estate and Infrastructure</h4>
+                <p>Booming sector with projects in commercial, residential, and industrial development.</p>
+                <div class="stats">
+                    Job Openings: 25,000 | Growth Rate: 9% 📈
+                </div>
+            </div>
+            <!-- Card for Education -->
+            <div class="card hover-scale" data-aos="flip-right" data-aos-delay="800">
+                <img src="assets/education.webp" alt="Education Industry" class="w-full h-32 object-cover rounded-t-md mb-4">
+                <h4>Education</h4>
+                <p>Strong sector with reputed universities, research institutions, and ed-tech growth.</p>
+                <div class="stats">
+                    Job Openings: 20,000 | Growth Rate: 7% 📈
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Insights Content -->
+    <section class="py-12 px-4 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-3xl font-bold text-center mb-8" data-aos="fade-down" data-aos-delay="200">Which Industries are Hiring the Most?</h2>
+
+        <!-- Filters -->
+        <div class="mb-8 flex justify-center space-x-4" data-aos="fade-up" data-aos-delay="300">
+            <select id="countryFilter" class="p-2 border rounded-md">
+                <option value="all">Hyderabad (Default)</option>
+            </select>
+            <select id="yearFilter" class="p-2 border rounded-md">
+                <option value="all">All Years</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+            </select>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="chart-container mb-12" data-aos="zoom-in" data-aos-delay="400">
+            <h3 class="text-xl font-semibold text-center mb-4">Industry Hiring Breakdown</h3>
+            <canvas id="industryPieChart"></canvas>
+        </div>
+        
+        <!-- Flip Container for Table and Graph -->
+        <div class="flip-container" data-aos="fade-up" data-aos-delay="600">
+            <div class="flip-inner" id="flipInner">
+                <!-- Front: Industry Comparison Table -->
+                <div class="flip-front">
+                    <h3 class="text-xl font-semibold mb-4">Industry Comparison</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 bg-blue-500 text-white">Industry</th>
+                                    <th class="px-4 py-2 bg-blue-500 text-white">Avg Salary (₹)</th>
+                                    <th class="px-4 py-2 bg-blue-500 text-white">Job Openings</th>
+                                    <th class="px-4 py-2 bg-blue-500 text-white">Growth Rate (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="industryTable"></tbody>
+                            <!-- New Row for Industry Selection -->
+                            <tr>
+                                <td colspan="4" class="bg-gray-100">
+                                    <div class="flex flex-col md:flex-row items-center gap-4 p-4">
+                                        <select id="industry1" class="p-2 border rounded-md w-full md:w-auto">
+                                            <option value="">Select Industry 1</option>
+                                            <!-- Populate dynamically from JSON -->
+                                        </select>
+                                        <select id="industry2" class="p-2 border rounded-md w-full md:w-auto">
+                                            <option value="">Select Industry 2</option>
+                                            <!-- Populate dynamically from JSON -->
+                                        </select>
+                                        <button id="graphBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors w-full md:w-auto">Graph</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- Back: Bar Graph -->
+                <div class="flip-back">
+                    <div class="graph-container">
+                        <canvas id="industryBarChart" class="w-full h-64"></canvas>
+                        <button id="backToTableBtn" class="bg-gray-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-600 transition-colors">Back to Table</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+
+    <!-- AOS JS CDN -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- JavaScript for AOS, Chart, Filters, Table, Graph, and Hamburger Menu -->
+    <script>
+        // Initialize AOS
+        AOS.init();
+
+        // JSON Data
+        const industryData = {
+            "industries": [
+                {
+                    "name": "IT and ITES",
+                    "avg_salary": 1200000,
+                    "job_openings": 905715,
+                    "growth_rate": 15,
+                    "major_companies": ["Microsoft", "Google", "Infosys"],
+                    "description": "Hyderabad's IT sector has seen significant growth, with major global giants establishing substantial operations in the city.",
+                    "location": "HITEC City, Gachibowli"
+                },
+                {
+                    "name": "Pharmaceuticals and Biotechnology",
+                    "avg_salary": 800000,
+                    "job_openings": 50000,
+                    "growth_rate": 12,
+                    "major_companies": ["Dr. Reddy's Laboratories", "Aurobindo Pharma", "Bharat Biotech"],
+                    "description": "Known as the 'Pharma City' of India, Hyderabad hosts numerous pharmaceutical and biotech companies, contributing significantly to exports and employment.",
+                    "location": "Genome Valley, Hyderabad Pharma City"
+                },
+                {
+                    "name": "Manufacturing",
+                    "avg_salary": 700000,
+                    "job_openings": 40000,
+                    "growth_rate": 10,
+                    "major_companies": ["Hyundai", "Tata Boeing Aerospace", "Mahindra & Mahindra"],
+                    "description": "The manufacturing sector in Hyderabad includes industries like electronics, automobiles, aerospace, and food and beverages.",
+                    "location": "Patancheru, Balanagar"
+                },
+                {
+                    "name": "Financial Services",
+                    "avg_salary": 900000,
+                    "job_openings": 30000,
+                    "growth_rate": 8,
+                    "major_companies": ["Axis Bank", "HSBC", "ICICI Bank"],
+                    "description": "Hyderabad's financial services sector encompasses banking, investment firms, and fintech companies, offering a range of financial products and services.",
+                    "location": "Madhapur, Banjara Hills"
+                },
+                {
+                    "name": "Real Estate and Infrastructure",
+                    "avg_salary": 850000,
+                    "job_openings": 25000,
+                    "growth_rate": 9,
+                    "major_companies": ["Larsen & Toubro", "Tata Projects", "Phoenix Group"],
+                    "description": "The city's real estate and infrastructure sector is booming, with numerous projects in commercial, residential, and industrial development.",
+                    "location": "Jubilee Hills, Kondapur"
+                },
+                {
+                    "name": "Education",
+                    "avg_salary": 600000,
+                    "job_openings": 20000,
+                    "growth_rate": 7,
+                    "major_companies": ["IIT Hyderabad", "BITS Pilani Hyderabad", "University of Hyderabad"],
+                    "description": "Hyderabad has a strong education sector with reputed universities, research institutions, and a growing ed-tech industry.",
+                    "location": "Gachibowli, Tarnaka"
+                }
+            ]
+        };
+
+        // Convert salaries from INR to USD for display (assuming 1 USD = 83 INR for simplicity)
+        const usdRate = 83;
+        const industries = industryData.industries;
+
+        // Initialize Chart, Table, and Graph
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pie Chart with Spin Opening Effect
+            const pieCtx = document.getElementById('industryPieChart').getContext('2d');
+            const pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: industries.map(ind => ind.name),
+                    datasets: [{
+                        data: industries.map(ind => ind.job_openings),
+                        backgroundColor: [
+                            '#4BC0C0', // IT & ITES
+                            '#FF6384', // Pharmaceuticals & Biotechnology
+                            '#FFCE56', // Manufacturing
+                            '#36A2EB', // Financial Services
+                            '#FF9F40', // Real Estate & Infrastructure
+                            '#9966FF'  // Education
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Industry Hiring Breakdown',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${value.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        animateRotate: true, // Enables rotation animation
+                        animateScale: true,  // Scales segments in as they rotate
+                        duration: 2000,      // Duration of the spin (2 seconds)
+                        easing: 'easeOutBounce' // Smooth, bouncy easing for a polished effect
+                    }
+                }
+            });
+
+            // Cards Section (No changes needed, already populated)
+
+            // Industry Comparison Table and Graph Setup
+const tableBody = document.getElementById('industryTable');
+const flipInner = document.getElementById('flipInner');
+const industry1Select = document.getElementById('industry1');
+const industry2Select = document.getElementById('industry2');
+const graphBtn = document.getElementById('graphBtn');
+const backToTableBtn = document.getElementById('backToTableBtn');
+const barCtx = document.getElementById('industryBarChart').getContext('2d');
+let barChart = null;
+
+// Populate industry dropdowns
+industries.forEach(ind => {
+    const option1 = document.createElement('option');
+    option1.value = ind.name;
+    option1.textContent = ind.name;
+    industry1Select.appendChild(option1.cloneNode(true));
+    industry2Select.appendChild(option1.cloneNode(true));
+});
+
+// Fill Industry Comparison Table
+industries.forEach(ind => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td class="px-4 py-2">${ind.name}</td>
+        <td class="px-4 py-2">₹${ind.avg_salary.toLocaleString()} (${(ind.avg_salary / usdRate).toFixed(0)}K USD)</td>
+        <td class="px-4 py-2">${ind.job_openings.toLocaleString()}</td>
+        <td class="px-4 py-2">${ind.growth_rate}% 📈</td>
+    `;
+    tableBody.appendChild(row);
+});
+
+            // Filters (Simple implementation for now, can be expanded)
+            const countryFilter = document.getElementById('countryFilter');
+            const yearFilter = document.getElementById('yearFilter');
+
+            countryFilter.addEventListener('change', () => {
+                console.log('Country filter changed to:', countryFilter.value);
+                updateChartsAndTable();
+            });
+
+            yearFilter.addEventListener('change', () => {
+                console.log('Year filter changed to:', yearFilter.value);
+                updateChartsAndTable();
+            });
+
+            function updateChartsAndTable() {
+                // This is a placeholder; implement filtering logic based on JSON data if expanded
+                pieChart.update();
+                // Rebuild table if needed
+                tableBody.innerHTML = '';
+                industries.forEach(ind => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${ind.name}</td>
+                        <td>₹${ind.avg_salary.toLocaleString()} (${(ind.avg_salary / usdRate).toFixed(0)}K USD)</td>
+                        <td>${ind.job_openings.toLocaleString()}</td>
+                        <td>${ind.growth_rate}% 📈</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Graph Button Functionality
+            graphBtn.addEventListener('click', () => {
+                const ind1 = industry1Select.value;
+                const ind2 = industry2Select.value;
+
+                if (ind1 && ind2 && ind1 !== ind2) {
+                    const ind1Data = industries.find(ind => ind.name === ind1);
+                    const ind2Data = industries.find(ind => ind.name === ind2);
+
+                    if (ind1Data && ind2Data) {
+                        flipInner.classList.add('flipped');
+
+                        // Destroy existing bar chart if it exists
+                        if (barChart) {
+                            barChart.destroy();
+                        }
+
+                        // Create new bar chart
+                        barChart = new Chart(barCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: [ind1, ind2],
+                                datasets: [{
+                                    label: 'Job Openings',
+                                    data: [ind1Data.job_openings, ind2Data.job_openings],
+                                    backgroundColor: ['#4BC0C0', '#FF6384'],
+                                    borderColor: ['#36A2EB', '#FF4136'],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: { display: true, text: 'Job Openings' }
+                                    }
+                                },
+                                plugins: {
+                                    legend: { display: false },
+                                    title: {
+                                        display: true,
+                                        text: 'Industry Job Openings Comparison',
+                                        font: { size: 16, weight: 'bold' }
+                                    }
+                                },
+                                animation: {
+                                    duration: 1000,
+                                    easing: 'easeOutBounce'
+                                }
+                            }
+                        });
+                    } else {
+                        alert('Please select valid industries.');
+                    }
+                } else {
+                    alert('Please select two different industries.');
+                }
+            });
+
+            // Back to Table Button Functionality
+            backToTableBtn.addEventListener('click', () => {
+                flipInner.classList.remove('flipped');
+                // Destroy bar chart when going back to table
+                if (barChart) {
+                    barChart.destroy();
+                    barChart = null;
+                }
+            });
+
+            // Hamburger Menu Toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+        });
+
+        // Add delay to animations
+        document.querySelectorAll('.delay-200').forEach(el => el.style.animationDelay = '0.2s');
+        document.querySelectorAll('.delay-400').forEach(el => el.style.animationDelay = '0.4s');
+        document.querySelectorAll('.delay-600').forEach(el => el.style.animationDelay = '0.6s');
+    </script>
+
+    
+</body>
+</html>

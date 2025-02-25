@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPulse - Home</title>
+    <link rel="icon" href="assets/jobpulse_logo.png" type="image/icon type">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- AOS CSS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- tsParticles CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide/dist/umd/lucide.min.js"></script>
+    <style>
+        /* Custom animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        /* Ensure particle container is behind content */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Places particles behind all content */
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); /* Intense dark gradient */
+        }
+        /* Adjust body and hero section to work with particles */
+        body {
+            position: relative;
+            overflow-x: hidden;
+        }
+        section {
+            position: relative;
+            z-index: 1; /* Ensures content stays above particles */
+        }
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #1F51FF;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        .dark .hamburger span {
+            background: #e5e7eb;
+        }
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #1f2937;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+            }
+            .dark .nav-menu {
+                background: #1f2937;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+            /* Hamburger animation when active */
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+                background: #e5e7eb;
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+                background: #e5e7eb;
+            }
+        }
+        /* About Card Styles */
+        #aboutCard {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            z-index: 1000;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        #aboutCard.active {
+            display: block;
+        }
+        #aboutOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+        }
+        #aboutOverlay.active {
+            display: block;
+        }
+        /* Source Card Styles */
+        #sourceCard {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            z-index: 1000;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        #sourceCard.active {
+            display: block;
+        }
+        #sourceOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+        }
+        #sourceOverlay.active {
+            display: block;
+        }
+        .source-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .source-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .source-card img {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
+        .source-card h3 {
+            color: #e2e8f0;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        .source-card p {
+            color: #a0aec0;
+            font-size: 0.875rem;
+        }
+        .source-card a {
+            color: #3182ce;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: underline;
+        }
+        /* Contact Card Styles */
+        #contactCard {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            z-index: 1000;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        #contactCard.active {
+            display: block;
+        }
+        #contactOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+        }
+        #contactOverlay.active {
+            display: block;
+        }
+        .flip-in {
+            animation: flipIn 0.8s ease-out forwards;
+        }
+        .flip-out {
+            animation: flipOut 0.8s ease-out forwards;
+        }
+        @keyframes flipIn {
+            from { transform: translate(-50%, -50%) rotateY(90deg); opacity: 0; }
+            to { transform: translate(-50%, -50%) rotateY(0deg); opacity: 1; }
+        }
+        @keyframes flipOut {
+            from { transform: translate(-50%, -50%) rotateY(0deg); opacity: 1; }
+            to { transform: translate(-50%, -50%) rotateY(90deg); opacity: 0; }
+        }
+        /* Contact Card Specific Styles */
+        .contact-info {
+            margin-bottom: 1rem;
+        }
+        .contact-info a {
+            color: #3182ce;
+            text-decoration: underline;
+            font-size: 1rem;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .social-links a {
+            color: #e2e8f0;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #3182ce;
+        }
+        .feedback-form {
+            margin-bottom: 1rem;
+        }
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+        }
+        .feedback-form button {
+            background: #3182ce;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .feedback-form button:hover {
+            background: #2b6cb0;
+        }
+        .faqs {
+            margin-top: 1rem;
+        }
+        .faq {
+            margin-bottom: 0.5rem;
+        }
+        .faq h4 {
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .faq p {
+            color: #a0aec0;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Particle Background -->
+    <div id="tsparticles"></div>
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center sticky top-0 z-10" data-aos="fade-down" data-aos-duration="800">
+        <div class="flex items-center" data-aos="zoom-in" data-aos-delay="200">
+            <img src="assets/jobpulse_logo.png" alt="JobPulse Logo" class="w-10 h-10 mr-2">
+            <h1 class="text-2xl font-bold">JobPulse</h1>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-menu space-x-6 md:flex md:items-center" data-aos="fade-left" data-aos-delay="400">
+            <a href="#" class="hover:text-blue-500 transition-colors">Home</a>
+            <a href="industries.html" class="hover:text-blue-500 transition-colors">Industries</a>
+            <a href="role-salary.html" class="hover:text-blue-500 transition-colors">Roles & Salaries</a>
+            <a href="skills.html" class="hover:text-blue-500 transition-colors">Skills</a>
+            <a href="trends.html" class="hover:text-blue-500 transition-colors">Trends</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 text-center text-white" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-4 animate-fade-in-up" data-aos="zoom-in" data-aos-delay="200">Explore the Latest Job Market Trends!</h2>
+        <p class="text-lg md:text-xl mb-6 animate-fade-in-up delay-200" data-aos="fade-up" data-aos-delay="400">Your go-to dashboard for real-time insights into jobs, industries, and skills.</p>
+        <a href="#trending-chart" id="view-insights-btn" class="inline-block bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-100 hover-scale transition-colors animate-fade-in-up delay-400" data-aos="flip-up" data-aos-delay="600">View Insights →</a>
+    </section>
+
+    <!-- Key Statistics Cards -->
+    <section id="insights" class="py-12 px-4 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h3 class="text-2xl font-semibold text-center mb-8" data-aos="fade-down" data-aos-delay="200">Key Highlights</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up" data-aos="flip-left" data-aos-delay="300">
+                <p class="text-3xl font-bold text-blue-500">IT & Software – 40%</p>
+                <p class="text-gray-600 dark:text-gray-300">Top Hiring Industry in Hyderabad</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-200" data-aos="flip-right" data-aos-delay="400">
+                <p class="text-3xl font-bold text-green-500">Data Scientist</p>
+                <p class="text-gray-600 dark:text-gray-300">Most In-Demand Role</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-400" data-aos="flip-left" data-aos-delay="500">
+                <p class="text-3xl font-bold text-yellow-500">₹32 LPA</p>
+                <p class="text-gray-600 dark:text-gray-300">Highest Paying Industry: AI & Machine Learning</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-600" data-aos="flip-right" data-aos-delay="600">
+                <p class="text-3xl font-bold text-purple-500">2,60,000+</p>
+                <p class="text-gray-600 dark:text-gray-300">Total Jobs Available in Hyderabad</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Market Insights Section (Hyderabad-Specific) -->
+    <section id="market-insights" class="py-12 px-4 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h3 class="text-2xl font-semibold text-center mb-8 text-white" data-aos="zoom-in" data-aos-delay="200">Hyderabad Job Market Insights</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up" data-aos="flip-left" data-aos-delay="300">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-11h-2v4H9v2h2v2h2v-2h2v-2h-2V9z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-blue-500">IT Sector Boom</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300">Hyderabad's IT sector leads with an 8% job growth forecast for 2025, driven by AI, cloud, and GCCs.</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-200" data-aos="flip-right" data-aos-delay="400">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 text-green-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-green-500">Emerging Tech Roles</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300">Demand for AI/ML, cybersecurity, and 5G skills surges as Hyderabad cements its tech hub status.</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-400" data-aos="flip-left" data-aos-delay="500">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-yellow-500">Hiring Momentum</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300">Over 260,000 jobs available, with a 41% rise in IT postings last year continuing into 2025.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Job Roles Chart -->
+    <section id="trending-chart" class="py-12 px-4 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h3 class="text-2xl font-semibold text-center mb-8" data-aos="zoom-in" data-aos-delay="200">Trending Job Roles</h3>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="400">
+            <canvas id="jobRolesChart" class="w-full h-96"></canvas>
+        </div>
+    </section>
+
+    <!-- Future Job Opportunities Section (Hyderabad-Specific) -->
+    <section id="future-opportunities" class="py-12 px-4 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+        <h3 class="text-2xl font-semibold text-center mb-8 text-white" data-aos="zoom-in" data-aos-delay="200">Future Job Opportunities in Hyderabad</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up" data-aos="flip-left" data-aos-delay="300">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-11h-2v4H9v2h2v2h2v-2h2v-2h-2V9z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-blue-500">AI & Data Science</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300">AI-driven roles expected to grow by 15% in 2025, fueled by Hyderabad’s tech investments.</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-200" data-aos="flip-right" data-aos-delay="400">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 text-green-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-green-500">Green Tech Jobs</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300">Sustainable tech roles rise with Telangana’s push for renewable energy initiatives.</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover-scale animate-fade-in-up delay-400" data-aos="flip-left" data-aos-delay="500">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <p class="text-xl font-bold text-yellow-500">Pharma & Biotech</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300">Hyderabad’s Genome Valley sees a 10% job surge with global R&D expansion.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8" data-aos="fade-up" data-aos-duration="1000">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" id="aboutBtn" class="hover:text-blue-400 transition-colors">About</a>
+                <a href="#" id="sourceBtn" class="hover:text-blue-400 transition-colors">Sources</a>
+                <a href="#" id="contactBtn" class="hover:text-blue-400 transition-colors">Contact</a>
+            </div>
+            <p class="mt-4 text-sm">© 2025 JobPulse. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- About Card -->
+    <div id="aboutOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50"></div>
+    <div id="aboutCard" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md p-6 bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg z-100 hidden">
+        <h2 class="text-2xl font-bold text-white mb-4">JobPulse: Your Guide to Job Market Trends</h2>
+        <p class="text-gray-300 mb-4">JobPulse provides interactive visualizations on job market trends, skills in demand, and career insights to help students and professionals stay ahead.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="flex items-center"><svg class="w-5 h-5 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg><p class="text-gray-300">Real-Time Job Market Insights</p></div>
+            <div class="flex items-center"><svg class="w-5 h-5 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg><p class="text-gray-300">Top Skills Employers Want</p></div>
+            <div class="flex items-center"><svg class="w-5 h-5 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg><p class="text-gray-300">Country-Specific Trends</p></div>
+            <div class="flex items-center"><svg class="w-5 h-5 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg><p class="text-gray-300">Industry-Wise Job Growth</p></div>
+        </div>
+        <p class="text-gray-300 mb-4"><strong>Mission:</strong> Empowering professionals and students with real-time job market insights, helping them make data-driven career decisions. <br> Why? To bridge the gap between skills and job opportunities. How? By analyzing job market trends, salaries, and required skills.</p>
+        <p class="text-gray-300 mb-4"><strong>Vision:</strong> To become the go-to platform for job market analytics, helping individuals navigate their career paths with confidence. We aim to provide global and local job market trends, continuously update insights to match changing industries, and support students & professionals in making informed career choices.</p>
+        <a href="trends.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 hover-scale transition-colors">Explore Trends →</a>
+    </div>
+
+    <!-- Source Card -->
+    <div id="sourceOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50"></div>
+    <div id="sourceCard" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-4xl p-6 bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg z-100 hidden">
+        <h2 class="text-2xl font-bold text-white mb-4">JobPulse Data Sources</h2>
+        <div id="sourceCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- Contact Card -->
+    <div id="contactOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50"></div>
+    <div id="contactCard" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-4xl p-6 bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg z-100 hidden">
+        <h2 class="text-2xl font-bold text-white mb-4">Contact Us</h2>
+        <p class="text-gray-300 mb-4">Get in touch with JobPulse for support, queries, or feedback.</p>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <p><a href="mailto:support@jobpulse.com" class="hover:text-blue-300">Email: support@jobpulse.com</a></p>
+            <p><a href="tel:+1234567890" class="hover:text-blue-300">Phone: +1 234-567-890</a></p>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="social-links mb-4">
+            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        </div>
+
+        <!-- Feedback Form -->
+        <div class="feedback-form">
+            <h3 class="text-lg font-semibold text-white mb-2">Send Us Feedback</h3>
+            <form id="feedbackForm">
+                <input type="text" placeholder="Your Name" class="mb-2" required>
+                <input type="email" placeholder="Your Email" class="mb-2" required>
+                <textarea placeholder="Your Message" rows="4" class="mb-2" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- FAQs -->
+        <div class="faqs">
+            <h3 class="text-lg font-semibold text-white mb-2">Frequently Asked Questions</h3>
+            <div class="faq">
+                <h4>How do I access job trends?</h4>
+                <p>Visit our Trends page for real-time job market insights and visualizations.</p>
+            </div>
+            <div class="faq">
+                <h4>Can I download the data?</h4>
+                <p>Currently, data is available for viewing only, but we’re working on downloadable reports.</p>
+            </div>
+            <div class="faq">
+                <h4>How often is the data updated?</h4>
+                <p>Our data is updated monthly, with some sources providing real-time updates.</p>
+            </div>
+            <div class="faq">
+                <h4>Is JobPulse free to use?</h4>
+                <p>Yes, JobPulse is free for basic access, with premium features coming soon.</p>
+            </div>
+            <div class="faq">
+                <h4>How can I suggest new features?</h4>
+                <p>Use the feedback form above or email us at support@jobpulse.com.</p>
+            </div>
+        </div>
+
+        <a href="home.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-blue-600 hover-scale transition-colors">Back to Home →</a>
+    </div>
+
+    <!-- AOS JS CDN -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- JavaScript for Particles, AOS, Chart, and Smooth Scroll -->
+    <script>
+        // Initialize tsParticles
+        tsParticles.load("tsparticles", {
+            background: {
+                color: {
+                    value: "transparent" // Use CSS gradient instead
+                }
+            },
+            particles: {
+                number: {
+                    value: 20, // Fewer particles for a clean line graph effect
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#1F51FF" // blue glowing color
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.8,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.3
+                    }
+                },
+                size: {
+                    value: 5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 2
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#1F51FF", // Green lines
+                    opacity: 0.6,
+                    width: 2
+                },
+                move: {
+                    enable: true,
+                    speed: 3,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: true,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse" // Particles move away on hover
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push" // Add new particles on click
+                    },
+                    resize: true
+                },
+                modes: {
+                    repulse: {
+                        distance: 100,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Initialize AOS
+        AOS.init();
+
+        // Ensure DOM is fully loaded before running scripts
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hamburger menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Smooth Scroll to Trending Chart
+            const viewInsightsBtn = document.getElementById('view-insights-btn');
+            viewInsightsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('#trending-chart').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+
+            // Chart.js - Trending Job Roles Bar Chart with Adjusted Labels
+            const ctx = document.getElementById('jobRolesChart').getContext('2d');
+            const jobRolesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Data Analyst',
+                        'AI Eng.',
+                        'Cybersec. Exp.',
+                        'Soft. Eng.',
+                        'Cloud Arch.',
+                        'Reg. Nurse',
+                        'Fin. Analyst',
+                        'CRA'
+                    ],
+                    datasets: [{
+                        label: 'Job Demand (%)',
+                        data: [22, 30, 25, 28, 27, 18, 15, 20],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(234, 179, 8, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(34, 197, 94, 1)',
+                            'rgba(234, 179, 8, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Demand (%)' }
+                        },
+                        x: {
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: window.innerWidth < 640 ? 90 : 45,
+                                minRotation: window.innerWidth < 640 ? 90 : 45,
+                                font: {
+                                    size: window.innerWidth < 640 ? 10 : 12
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const fullLabels = [
+                                        'Data Analyst',
+                                        'AI Engineer',
+                                        'Cybersecurity Expert',
+                                        'Software Engineer',
+                                        'Cloud Architect',
+                                        'Registered Nurse',
+                                        'Financial Analyst',
+                                        'Clinical Research Associate (CRA)'
+                                    ];
+                                    return `${fullLabels[context.dataIndex]}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeOutBounce'
+                    }
+                }
+            });
+
+            // Add delay to animations
+            document.querySelectorAll('.delay-200').forEach(el => el.style.animationDelay = '0.2s');
+            document.querySelectorAll('.delay-400').forEach(el => el.style.animationDelay = '0.4s');
+            document.querySelectorAll('.delay-600').forEach(el => el.style.animationDelay = '0.6s');
+
+            // Update chart on window resize for responsiveness
+            window.addEventListener('resize', () => {
+                jobRolesChart.options.scales.x.ticks.maxRotation = window.innerWidth < 640 ? 90 : 45;
+                jobRolesChart.options.scales.x.ticks.minRotation = window.innerWidth < 640 ? 90 : 45;
+                jobRolesChart.options.scales.x.ticks.font.size = window.innerWidth < 640 ? 10 : 12;
+                jobRolesChart.update();
+            });
+
+            // About Card Functionality
+            const aboutBtn = document.getElementById('aboutBtn');
+            const aboutCard = document.getElementById('aboutCard');
+            const aboutOverlay = document.getElementById('aboutOverlay');
+
+            aboutBtn.addEventListener('click', () => {
+                aboutOverlay.classList.add('active');
+                aboutCard.classList.add('active', 'flip-in');
+                aboutCard.classList.remove('flip-out');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+
+            aboutOverlay.addEventListener('click', (e) => {
+                if (e.target === aboutOverlay) {
+                    aboutCard.classList.add('flip-out');
+                    aboutCard.classList.remove('flip-in', 'active');
+                    setTimeout(() => {
+                        aboutOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto'; // Restore scrolling
+                    }, 800); // Match flip-out animation duration
+                }
+            });
+
+            // Source Card Functionality
+            const sourceBtn = document.getElementById('sourceBtn');
+            const sourceCard = document.getElementById('sourceCard');
+            const sourceOverlay = document.getElementById('sourceOverlay');
+
+            // JSON Data for Sources
+            const sourceData = {
+                "sources": [
+                    {
+                        "name": "LinkedIn Jobs Report",
+                        "logo": "assets/linkedin.png",
+                        "data_type": "Hiring trends, skills demand",
+                        "last_updated": "2025-01-15",
+                        "url": "https://www.linkedin.com/jobs"
+                    },
+                    {
+                        "name": "Glassdoor Insights",
+                        "logo": "assets/glassdoor.png",
+                        "data_type": "Salary insights, job reviews",
+                        "last_updated": "2025-02-01",
+                        "url": "https://www.glassdoor.co.in/Community/index.htm"
+                    },
+                    {
+                        "name": "Bureau of Labor Statistics",
+                        "logo": "assets/bls.png",
+                        "data_type": "Official employment statistics",
+                        "last_updated": "2025-01-30",
+                        "url": "https://www.bls.gov"
+                    },
+                    {
+                        "name": "Indeed Job Market Pulse",
+                        "logo": "assets/indeed.png",
+                        "data_type": "Job postings, employer demand",
+                        "last_updated": "2025-02-10",
+                        "url": "https://www.indeed.com/hiring-insights"
+                    },
+                    {
+                        "name": "OECD Employment Outlook",
+                        "logo": "assets/oecd.png",
+                        "data_type": "International labor market analysis",
+                        "last_updated": "2025-01-25",
+                        "url": "https://www.oecd.org/employment/outlook"
+                    }
+                ]
+            };
+
+            // Generate Source Cards
+            const sourceCardsContainer = document.getElementById('sourceCards');
+            sourceData.sources.forEach(source => {
+                const card = document.createElement('div');
+                card.className = 'source-card';
+                card.innerHTML = `
+                    <img src="${source.logo}" alt="${source.name} Logo" class="w-12 h-12 rounded-full">
+                    <div>
+                        <h3 class="text-lg font-semibold">${source.name}</h3>
+                        <p class="text-sm text-gray-400">Provides: ${source.data_type}</p>
+                        <p class="text-xs text-gray-500">Last updated: ${new Date(source.last_updated).toLocaleDateString()}</p>
+                        <a href="${source.url}" target="_blank" class="text-blue-400 text-sm font-medium hover:underline">View Source</a>
+                    </div>
+                `;
+                sourceCardsContainer.appendChild(card);
+            });
+
+            sourceBtn.addEventListener('click', () => {
+                sourceOverlay.classList.add('active');
+                sourceCard.classList.add('active', 'flip-in');
+                sourceCard.classList.remove('flip-out');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+
+            sourceOverlay.addEventListener('click', (e) => {
+                if (e.target === sourceOverlay) {
+                    sourceCard.classList.add('flip-out');
+                    sourceCard.classList.remove('flip-in', 'active');
+                    setTimeout(() => {
+                        sourceOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto'; // Restore scrolling
+                    }, 800); // Match flip-out animation duration
+                }
+            });
+
+            // Contact Card Functionality
+            const contactBtn = document.getElementById('contactBtn');
+            const contactCard = document.getElementById('contactCard');
+            const contactOverlay = document.getElementById('contactOverlay');
+
+            contactBtn.addEventListener('click', () => {
+                contactOverlay.classList.add('active');
+                contactCard.classList.add('active', 'flip-in');
+                contactCard.classList.remove('flip-out');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+
+            contactOverlay.addEventListener('click', (e) => {
+                if (e.target === contactOverlay) {
+                    contactCard.classList.add('flip-out');
+                    contactCard.classList.remove('flip-in', 'active');
+                    setTimeout(() => {
+                        contactOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto'; // Restore scrolling
+                    }, 800); // Match flip-out animation duration
+                }
+            });
+
+            // Basic form submission handling (for demo purposes)
+            document.getElementById('feedbackForm')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for your feedback! We’ll get back to you soon.');
+                e.target.reset();
+            });
+
+            // Initialize Lucide Icons
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

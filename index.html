@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPulse - Welcome</title>
+    <link rel="icon" href="assets/jobpulse_logo.png" type="image/icon type">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS CSS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- tsParticles CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <!-- Typed.js CDN for dynamic text -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Lottie Animation (Optional, if you want to add a futuristic job market animation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.13/lottie.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            color: #e2e8f0;
+        }
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .glowing-btn {
+            background: #1F51FF;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 0 10px rgba(31, 81, 255, 0.5);
+        }
+        .glowing-btn:hover {
+            box-shadow: 0 0 20px rgba(31, 81, 255, 1);
+            transform: scale(1.05);
+        }
+        .parallax {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1920x1080?text=JobPulse+Background') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+            transition: transform 0.1s ease-out;
+        }
+        /* Logo Positioning */
+        .logo {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+        }
+        /* Mouse Parallax Effect */
+        @media (min-width: 768px) {
+            .parallax {
+                transform: translate(0, 0);
+            }
+            body:hover .parallax {
+                transform: translate(calc(var(--mouse-x) * -0.05%), calc(var(--mouse-y) * -0.05%));
+            }
+        }
+        /* AOS and Custom Animations */
+        [data-aos="fade-up-slow"] {
+            animation: fadeInUpSlow 1.2s ease-out;
+        }
+        @keyframes fadeInUpSlow {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .typed-cursor {
+            opacity: 1;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Particle Background -->
+    <div id="tsparticles"></div>
+    <!-- Parallax Background (Optional, for mouse interaction) -->
+    <div class="parallax"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" data-aos="fade-up" data-aos-duration="1200">
+        <!-- JobPulse Logo -->
+        <img src="assets/jobpulse_logo.png" alt="JobPulse Logo" class="logo" data-aos="fade-up-slow" data-aos-delay="100">
+        
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4" data-aos="fade-up-slow" data-aos-delay="200">Welcome to <span class="text-blue-400">JobPulse</span> – Your Gateway to Career Insights</h1>
+        <p class="text-xl md:text-2xl mb-6 text-gray-300" data-aos="fade-up-slow" data-aos-delay="400">Explore real-time job trends, salaries, and in-demand skills across industries.</p>
+        
+        <!-- Dynamic Quote -->
+        <div class="text-lg md:text-xl mb-8 text-gray-400" data-aos="fade-up-slow" data-aos-delay="600">
+            <span id="dynamicQuote"></span>
+        </div>
+
+        <a href="home.html" class="glowing-btn" data-aos="fade-up-slow" data-aos-delay="800">Enter JobPulse</a>
+    </section>
+
+    <!-- AOS JS CDN -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- JavaScript for Particles, AOS, Typed.js, and Parallax -->
+    <script>
+        // Initialize tsParticles
+        tsParticles.load("tsparticles", {
+            background: {
+                color: { value: "transparent" }
+            },
+            particles: {
+                number: { value: 30, density: { enable: true, value_area: 800 } },
+                color: { value: "#1F51FF" },
+                shape: { type: "circle" },
+                opacity: { value: 0.7, random: true, anim: { enable: true, speed: 1, opacity_min: 0.3 } },
+                size: { value: 4, random: true, anim: { enable: true, speed: 2, size_min: 1 } },
+                line_linked: { enable: true, distance: 150, color: "#1F51FF", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+
+        // Initialize AOS
+        AOS.init();
+
+        // Typed.js for Dynamic Quote
+        const typed = new Typed('#dynamicQuote', {
+            strings: [
+                "AI Engineers are in high demand with a 25% growth rate",
+                "Investment Banking salaries in India start at ₹18L per year",
+                "Data Scientists lead with 30% job demand in 2025",
+                "Cloud Architects see a 20% rise in Hyderabad’s tech sector"
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true,
+            showCursor: true,
+            cursorChar: '|'
+        });
+
+        // Mouse Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX - window.innerWidth / 2;
+            const mouseY = e.clientY - window.innerHeight / 2;
+            document.body.style.setProperty('--mouse-x', mouseX + 'px');
+            document.body.style.setProperty('--mouse-y', mouseY + 'px');
+        });
+    </script>
+</body>
+</html>
