@@ -318,6 +318,81 @@
             color: #a0aec0;
             font-size: 0.875rem;
         }
+        /* Advertisement Box Styles */
+#adBox {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 150px;
+    background: linear-gradient(135deg, #3b82f6, #10b981);
+    /* Message box shape with triangular pointer at bottom-right */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100%, 0% 85%);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    padding: 1rem;
+    animation: slideInAd 0.5s ease-out forwards;
+}
+#adBox.active {
+    display: block;
+}
+@keyframes slideInAd {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+#adBox .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+#adBox h3 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+#adBox p {
+    color: white;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+#adBox a {
+    display: inline-block;
+    background: white;
+    color: #3b82f6;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+#adBox a:hover {
+    background: #e5e7eb;
+}
+@media (max-width: 768px) {
+    #adBox {
+        width: 80%;
+        height: auto;
+        padding: 0.75rem;
+    }
+    #adBox h3 {
+        font-size: 1rem;
+    }
+    #adBox p {
+        font-size: 0.75rem;
+    }
+    #adBox a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.875rem;
+    }
+}
     </style>
 </head>
 <body class="font-sans text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
@@ -461,6 +536,14 @@
             <p class="mt-4 text-sm">© 2025 JobPulse. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Advertisement Box -->
+    <div id="adBox">
+        <button class="close-btn" id="closeAdBtn">×</button>
+        <h3>Boost Your Skills!</h3>
+        <p>Master IT aptitude tests with AptitudeSync, your smart hiring prep platform!</p>
+        <a href="https://mohdrahman32.github.io/AptitudeSync/" target="_blank">Learn More</a>
+    </div>
 
     <!-- About Card -->
     <div id="aboutOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50"></div>
@@ -896,6 +979,20 @@
 
             // Initialize Lucide Icons
             lucide.createIcons();
+
+            // Advertisement Box Functionality
+            const adBox = document.getElementById('adBox');
+            const closeAdBtn = document.getElementById('closeAdBtn');
+
+            // Show ad box after 2 seconds
+            setTimeout(() => {
+                adBox.classList.add('active');
+            }, 2000);
+
+            // Close ad box on click
+            closeAdBtn.addEventListener('click', () => {
+                adBox.classList.remove('active');
+            });
         });
     </script>
 </body>
