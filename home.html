@@ -340,63 +340,87 @@
         padding: 0.5rem 1rem; /* Smaller button */
         font-size: 0.875rem;
     }
+}
 
+/* Mobile Responsive Styles for Source and Contact Cards */
+@media (max-width: 768px) {
     /* Source Card */
     #sourceCard {
-        width: 95%; /* Full width for mobile */
-        max-width: 100%; /* Remove max-width constraint */
-        padding: 1rem; /* Reduce padding */
+        width: 90vw; /* Use viewport width for better scaling */
+        max-width: 90%; /* Ensure it doesn't exceed 90% of the screen */
+        padding: 1rem;
+        max-height: 80vh; /* Limit height to 80% of viewport height */
+        overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        box-sizing: border-box; /* Include padding in width/height calculations */
     }
     #sourceCard h2 {
-        font-size: 1.5rem; /* Smaller heading */
+        font-size: 1.25rem; /* Smaller heading for mobile */
     }
     #sourceCards {
         grid-template-columns: 1fr; /* Single column layout */
+        gap: 0.5rem; /* Reduce gap for tighter spacing */
     }
     .source-card {
-        flex-direction: column; /* Stack image and text vertically */
-        align-items: flex-start; /* Align items to the left */
-        padding: 0.75rem; /* Reduce padding */
+        flex-direction: column; /* Stack vertically */
+        align-items: flex-start;
+        padding: 0.75rem;
+        width: 100%; /*ין — box-sizing: border-box; /* Ensure width includes padding */
     }
     .source-card img {
-        width: 40px; /* Smaller image */
-        height: 40px;
+        width: 36px; /* Smaller image for mobile */
+        height: 36px;
     }
     .source-card h3 {
-        font-size: 1rem; /* Smaller title */
+        font-size: 1rem;
     }
     .source-card p, .source-card a {
-        font-size: 0.75rem; /* Smaller text */
+        font-size: 0.75rem;
     }
 
     /* Contact Card */
     #contactCard {
-        width: 95%; /* Full width for mobile */
-        max-width: 100%; /* Remove max-width constraint */
-        padding: 1rem; /* Reduce padding */
+        width: 90vw; /* Use viewport width for better scaling */
+        max-width: 90%; /* Ensure it doesn't exceed 90% of the screen */
+        padding: 1rem;
+        max-height: 80vh; /* Limit height to 80% of viewport height */
+        overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        box-sizing: border-box; /* Include padding in width/height calculations */
     }
     #contactCard h2 {
-        font-size: 1.5rem; /* Smaller heading */
+        font-size: 1.25rem; /* Smaller heading */
     }
     #contactCard h3 {
-        font-size: 1.125rem; /* Smaller subheading */
+        font-size: 1rem; /* Smaller subheading */
     }
     #contactCard p, #contactCard a {
-        font-size: 0.875rem; /* Smaller text */
+        font-size: 0.75rem; /* Smaller text */
+    }
+    .contact-info {
+        margin-bottom: 0.75rem; /* Reduce spacing */
     }
     .social-links {
-        gap: 0.75rem; /* Reduce gap between icons */
+        gap: 0.5rem; /* Smaller gap between icons */
+        flex-wrap: wrap; /* Allow icons to wrap if needed */
     }
     .social-links a {
         font-size: 1.25rem; /* Slightly smaller icons */
     }
+    .feedback-form {
+        margin-bottom: 0.75rem; /* Reduce spacing */
+    }
     .feedback-form input, .feedback-form textarea {
-        padding: 0.4rem; /* Smaller input padding */
-        font-size: 0.875rem; /* Smaller text */
+        padding: 0.4rem;
+        font-size: 0.75rem; /* Smaller text */
     }
     .feedback-form button {
-        padding: 0.4rem 0.8rem; /* Smaller button */
-        font-size: 0.875rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem; /* Smaller button text */
+    }
+    .faqs {
+        margin-top: 0.75rem; /* Reduce spacing */
+    }
+    .faq {
+        margin-bottom: 0.5rem;
     }
     .faq h4 {
         font-size: 0.875rem; /* Smaller FAQ question */
@@ -405,11 +429,41 @@
         font-size: 0.75rem; /* Smaller FAQ answer */
     }
     #contactCard a[href="home.html"] {
-        padding: 0.5rem 1rem; /* Smaller button */
-        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem; /* Smaller button text */
     }
 }
 
+/* Additional adjustments for very small screens */
+@media (max-width: 480px) {
+    #sourceCard, #contactCard {
+        width: 95vw; /* Slightly wider for very small screens */
+        padding: 0.75rem;
+        max-height: 75vh; /* Slightly shorter height */
+    }
+    #sourceCard h2, #contactCard h2 {
+        font-size: 1.125rem; /* Even smaller heading */
+    }
+    .source-card img {
+        width: 32px; /* Even smaller image */
+        height: 32px;
+    }
+    .source-card h3, #contactCard h3 {
+        font-size: 0.875rem;
+    }
+    .source-card p, .source-card a, #contactCard p, #contactCard a {
+        font-size: 0.6875rem; /* Even smaller text */
+    }
+    .social-links a {
+        font-size: 1rem; /* Smaller icons */
+    }
+    .feedback-form input, .feedback-form textarea {
+        font-size: 0.6875rem;
+    }
+    .feedback-form button {
+        font-size: 0.6875rem;
+    }
+}
         /* Advertisement Box Styles */
 #adBox {
     display: none;
